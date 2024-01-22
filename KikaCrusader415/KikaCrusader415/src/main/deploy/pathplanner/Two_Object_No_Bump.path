@@ -1,0 +1,108 @@
+{
+  "waypoints": [
+    {
+      "anchorPoint": {
+        "x": 1.8494666525198031,
+        "y": 4.956125073994171
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 3.1871312125184024,
+        "y": 4.013943949125592
+      },
+      "holonomicAngle": 180.0,
+      "isReversal": false,
+      "velOverride": null,
+      "isLocked": false,
+      "isStopPoint": false,
+      "stopEvent": {
+        "names": [],
+        "executionBehavior": "parallel",
+        "waitBehavior": "none",
+        "waitTime": 0
+      }
+    },
+    {
+      "anchorPoint": {
+        "x": 7.6268843909682165,
+        "y": 4.9848839160196
+      },
+      "prevControl": {
+        "x": 8.452064711818789,
+        "y": 7.043209002759451
+      },
+      "nextControl": {
+        "x": 7.17700928348242,
+        "y": 3.862718013319299
+      },
+      "holonomicAngle": 240.0,
+      "isReversal": false,
+      "velOverride": null,
+      "isLocked": false,
+      "isStopPoint": false,
+      "stopEvent": {
+        "names": [],
+        "executionBehavior": "parallel",
+        "waitBehavior": "none",
+        "waitTime": 0
+      }
+    },
+    {
+      "anchorPoint": {
+        "x": 1.85,
+        "y": 4.3
+      },
+      "prevControl": {
+        "x": 3.74546076799608,
+        "y": 5.821569930340986
+      },
+      "nextControl": null,
+      "holonomicAngle": 180.0,
+      "isReversal": false,
+      "velOverride": null,
+      "isLocked": false,
+      "isStopPoint": false,
+      "stopEvent": {
+        "names": [],
+        "executionBehavior": "parallel",
+        "waitBehavior": "none",
+        "waitTime": 0
+      }
+    }
+  ],
+  "maxVelocity": 3.5,
+  "maxAcceleration": 2.5,
+  "isReversed": null,
+  "markers": [
+    {
+      "position": 0.7,
+      "names": [
+        "Grab_Cube"
+      ]
+    },
+    {
+      "position": 1.7,
+      "names": [
+        "Raise_Elevator"
+      ]
+    },
+    {
+      "position": 1.05,
+      "names": [
+        "Stop_Intake"
+      ]
+    },
+    {
+      "position": 1.2,
+      "names": [
+        "Retract_Wrist"
+      ]
+    },
+    {
+      "position": 0.043636363636365284,
+      "names": [
+        "Drop_Elevator"
+      ]
+    }
+  ]
+}

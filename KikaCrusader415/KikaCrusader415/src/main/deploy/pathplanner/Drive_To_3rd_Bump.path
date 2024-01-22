@@ -1,0 +1,99 @@
+{
+  "waypoints": [
+    {
+      "anchorPoint": {
+        "x": 2.13,
+        "y": 1.55
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 4.842837634755892,
+        "y": -0.021721174984074578
+      },
+      "holonomicAngle": 180.0,
+      "isReversal": false,
+      "velOverride": null,
+      "isLocked": false,
+      "isStopPoint": false,
+      "stopEvent": {
+        "names": [],
+        "executionBehavior": "parallel",
+        "waitBehavior": "none",
+        "waitTime": 0
+      }
+    },
+    {
+      "anchorPoint": {
+        "x": 6.878233162406919,
+        "y": 2.3295115897162484
+      },
+      "prevControl": {
+        "x": 6.410440933695747,
+        "y": 2.0856199149181154
+      },
+      "nextControl": {
+        "x": 8.246861189620539,
+        "y": 3.043069791938737
+      },
+      "holonomicAngle": 30.498919191913476,
+      "isReversal": false,
+      "velOverride": null,
+      "isLocked": false,
+      "isStopPoint": false,
+      "stopEvent": {
+        "names": [],
+        "executionBehavior": "parallel",
+        "waitBehavior": "none",
+        "waitTime": 0
+      }
+    },
+    {
+      "anchorPoint": {
+        "x": 2.15,
+        "y": 1.59
+      },
+      "prevControl": {
+        "x": 5.006605091003675,
+        "y": 0.0016741759084647734
+      },
+      "nextControl": null,
+      "holonomicAngle": -180.0,
+      "isReversal": false,
+      "velOverride": null,
+      "isLocked": false,
+      "isStopPoint": false,
+      "stopEvent": {
+        "names": [],
+        "executionBehavior": "parallel",
+        "waitBehavior": "none",
+        "waitTime": 0
+      }
+    }
+  ],
+  "markers": [
+    {
+      "position": 0.01,
+      "names": [
+        "Drop_Elevator"
+      ]
+    },
+    {
+      "position": 0.5090909090909049,
+      "names": [
+        "Grab_Cube"
+      ]
+    },
+    {
+      "position": 1.3381818181817886,
+      "names": [
+        "Wrist_up"
+      ]
+    },
+    {
+      "position": 1.1,
+      "names": [
+        "Stop_Intake"
+      ]
+    }
+  ]
+}

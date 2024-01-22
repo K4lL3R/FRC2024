@@ -1,0 +1,105 @@
+{
+  "waypoints": [
+    {
+      "anchorPoint": {
+        "x": 1.8716280714032434,
+        "y": 0.6684416763458715
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 4.819442283863352,
+        "y": 0.8322091325936527
+      },
+      "holonomicAngle": 180.0,
+      "isReversal": false,
+      "velOverride": null,
+      "isLocked": false,
+      "isStopPoint": false,
+      "stopEvent": {
+        "names": [],
+        "executionBehavior": "parallel",
+        "waitBehavior": "none",
+        "waitTime": 0
+      }
+    },
+    {
+      "anchorPoint": {
+        "x": 6.93672153963827,
+        "y": 1.194837071428034
+      },
+      "prevControl": {
+        "x": 6.609163842650417,
+        "y": 1.2058783421130173
+      },
+      "nextControl": {
+        "x": 7.977814654356324,
+        "y": 1.1597440450892256
+      },
+      "holonomicAngle": 1.0,
+      "isReversal": false,
+      "velOverride": null,
+      "isLocked": false,
+      "isStopPoint": false,
+      "stopEvent": {
+        "names": [],
+        "executionBehavior": "parallel",
+        "waitBehavior": "none",
+        "waitTime": 0
+      }
+    },
+    {
+      "anchorPoint": {
+        "x": 1.9774171756501042,
+        "y": 1.5363565466934037
+      },
+      "prevControl": {
+        "x": 1.94262665062351,
+        "y": 0.6814028721467336
+      },
+      "nextControl": null,
+      "holonomicAngle": 180.0,
+      "isReversal": false,
+      "velOverride": null,
+      "isLocked": false,
+      "isStopPoint": false,
+      "stopEvent": {
+        "names": [],
+        "executionBehavior": "parallel",
+        "waitBehavior": "none",
+        "waitTime": 0
+      }
+    }
+  ],
+  "markers": [
+    {
+      "position": 0.48000000000000564,
+      "names": [
+        "intake_cube"
+      ]
+    },
+    {
+      "position": 1.367272727272728,
+      "names": [
+        "intake_up"
+      ]
+    },
+    {
+      "position": 1.541818181818181,
+      "names": [
+        "elevator_up"
+      ]
+    },
+    {
+      "position": 1.15,
+      "names": [
+        "stop_intake"
+      ]
+    },
+    {
+      "position": 0.01,
+      "names": [
+        "Drop_Elevator"
+      ]
+    }
+  ]
+}
