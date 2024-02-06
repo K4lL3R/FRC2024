@@ -1,5 +1,8 @@
 package frc.robot;
 
+import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix6.configs.ClosedLoopRampsConfigs;
+import com.ctre.phoenix6.signals.NeutralModeValue;
 import com.revrobotics.CANSparkBase.IdleMode;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
@@ -61,6 +64,7 @@ public final class Constants {
         /* These values are used by the drive falcon to ramp in open loop and closed loop driving.
          * We found a small open loop ramp (0.25) helps with tread wear, tipping, etc */
         public static final double openLoopRamp = 0.25;
+
         public static final double closedLoopRamp = 0.0;
 
         /* Angle Motor PID Values */
@@ -84,8 +88,8 @@ public final class Constants {
         public static final double maxAngularVelocity = 9.5;
 
         /* Neutral Modes */
-        public static final IdleMode angleIdleMode = IdleMode.kBrake;
-        public static final IdleMode driveIdleMode = IdleMode.kBrake;
+        public static final NeutralModeValue angleIdleMode = NeutralModeValue.Brake;
+        public static final NeutralModeValue driveIdleMode = NeutralModeValue.Brake;
 
         /* Module Specific Constants */
         /* Front Left Module - Module 0 */
@@ -169,8 +173,7 @@ public final class Constants {
         }
     }
 
-    public static final class Elevator {
-        public static final int canID = 10;
+    public static final class Climb {
         public static final int encoderPort = 7;
         //Comp
         // public static final double mappingOffset = 0.410;
@@ -178,7 +181,6 @@ public final class Constants {
         //Practice
         public static final double mappingOffset = 0.222;
         public static final double mappingHeight = 9.0;
-        public static final IdleMode idleMode = IdleMode.kBrake;
 
         public static final double kP = 0;
         public static final double kI = 0;
@@ -187,42 +189,62 @@ public final class Constants {
         public static final double maxVel = 24000;
         public static final double maxAccel = 96000;
 
-
-        public static final class ConeSetpoints {
-            public static final double high = 53.0;
-            public static final double mid = 40.0;
-        }
-        public static final class CubeSetpoints {
-            public static final double high = 48.0;
-            public static final double mid = 24.0;
-        }
         public static final class GlobalSetpoints {
-            public static final double ret = 9.0;
-            public static final double intake_cone = 15.0;
-            public static final double intake_cube = 10.0;
-            public static final double intake_cone_feeder = 10.0;
+            public static final double elevatorUpPos = 5000;
+            public static final double elevatorDefaultPos = 100;
+        }
+
+        public enum Position {
+            Up,
+            Down
         }
     }
 
-    public static final class Wrist {
-        public static final int canID = 15;
-        public static final int encoderPort = 0;
-        public static final IdleMode idleMode = IdleMode.kBrake;
+    public static final class Wrists {
         public static final double hardStopDegOffset = 0.507;
 
-        public static final class ConeSetpoints {
-            public static final double high = 116.5;
-            public static final double mid = 111.9;
+        public static final class Shooter {
+            public static final int canID = 15;
+            public static final int encoderPort = 0;
+            public static final IdleMode idleMode = IdleMode.kBrake;
+
+            public static final double closeSetPoint = 53;
+            public static final double downSetPoint = 45;
+
+            public enum ShooterMode {
+                Close,
+                Down
+            }
         }
-        public static final class CubeSetpoints {
-            public static final double high = 180.0;
-            public static final double mid = 175.0;
+
+        public static final class Arm {
+            public static final int canID = 19;
+            public static final int encoderPort = 1;
+            public static final IdleMode idleMode = IdleMode.kBrake;
+
+            public static final double stowSetPoint = 20;
+            public static final double scoreSetPoint = -27;
+
+            public enum ArmMode {
+                Stow,
+                Score
+            }
         }
-        public static final class GlobalSetpoints {
-            public static final double stow = 195.0;
-            public static final double intake_cone = 100.174;
-            public static final double intake_cube = 105.174;
-            public static final double intake_cone_feeder = 180.0;
+
+        public static final class Intake {
+            public static final int canID = 20;
+            public static final int encoderPort = 2;
+            public static final IdleMode idleMode = IdleMode.kBrake;
+
+            public static final double intakeSetPoint = 180;
+            public static final double stowSetPoint = 270;
+            public static final double feedSetPoint = 0;
+
+            public enum IntakeMode {
+                Down,
+                Stow,
+                Feed
+            }
         }
 
         public static final double kP = 0;
@@ -237,5 +259,12 @@ public final class Constants {
         public static final int canID = 9;
         public static final double intake_cone_outtake_cube = 1;//0.8
         public static final double intake_cube_outtake_cone = -1;//-0.5
+    }
+
+    public static final class LEDs {
+        public enum Colors {
+            Green,
+            Orange
+        }
     }
 }

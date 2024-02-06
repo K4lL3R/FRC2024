@@ -46,25 +46,16 @@ public class Swerve extends SubsystemBase {
     public void drive(Translation2d translation, double rotation, boolean fieldRelative, boolean isOpenLoop) {
         SwerveModuleState[] swerveModuleStates =
             Constants.Swerve.swerveKinematics.toSwerveModuleStates(
-                fieldRelative ? ChassisSpeeds.fromFieldRelativeSpeeds(
+                ChassisSpeeds.fromFieldRelativeSpeeds(
                                     translation.getX(), 
                                     translation.getY(), 
                                     rotation, 
                                     getYaw()
-                                )
-                                : new ChassisSpeeds(
-                                    translation.getX(), 
-                                    translation.getY(), 
-                                    rotation)
-                                );
-        SwerveDriveKinematics.desaturateWheelSpeeds(swerveModuleStates, Constants.Swerve.maxSpeed);
-
-        for(SwerveModule mod : mSwerveMods){
-            mod.setDesiredState(swerveModuleStates[mod.moduleNumber], isOpenLoop);
-        }
+                                ));
+        setModuleStates(swerveModuleStates, true);
     }    
 
-    public void setModuleStates(ChassisSpeeds speeds) {
+    public void setModuleStatesByChassis(ChassisSpeeds speeds) {
         ChassisSpeeds discreteSpeeds = ChassisSpeeds.discretize(speeds, 0.02);
 
         SwerveModuleState[] desiredStates = Constants.Swerve.swerveKinematics.toSwerveModuleStates(discreteSpeeds);
@@ -76,11 +67,11 @@ public class Swerve extends SubsystemBase {
 
     }
 
-    public void setModuleStates(SwerveModuleState[] desiredStates) {
+    public void setModuleStates(SwerveModuleState[] desiredStates, boolean isOpenLoop) {
         SwerveDriveKinematics.desaturateWheelSpeeds(desiredStates, Constants.Swerve.maxSpeed);
         
         for(SwerveModule mod : mSwerveMods){
-            mod.setDesiredState(desiredStates[mod.moduleNumber], false);
+            mod.setDesiredState(desiredStates[mod.moduleNumber], isOpenLoop);
         }
     }    
 

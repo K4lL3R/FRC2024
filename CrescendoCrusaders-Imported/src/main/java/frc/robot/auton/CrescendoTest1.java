@@ -31,7 +31,7 @@ public class CrescendoTest1 extends SequentialCommandGroup{
       swerveSubsys::getPose, // Pose2d supplier
       swerveSubsys::resetOdometry, // Pose2d consumer, used to reset odometry at the beginning of auto
       () -> Constants.Swerve.swerveKinematics.toChassisSpeeds(swerveSubsys.getModuleStates()),
-      swerveSubsys::setModuleStates,
+      swerveSubsys::setModuleStatesByChassis,
       new HolonomicPathFollowerConfig(
         new PIDConstants(5, 0, 0), 
         new PIDConstants(3,0,0), 

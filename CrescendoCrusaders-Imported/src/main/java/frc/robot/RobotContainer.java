@@ -7,7 +7,12 @@ package frc.robot;
 import frc.robot.Constants;
 import frc.robot.auton.CrescendoTest1;
 import frc.robot.commands.*;
+import frc.robot.commands.wrists.*;
+import frc.robot.commands.wrists.ArmWristPos;
 import frc.robot.subsystems.*;
+import frc.robot.subsystems.Wrists.armWrist;
+import frc.robot.subsystems.Wrists.wristIntake;
+import frc.robot.subsystems.Wrists.wristShooter;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 
@@ -29,16 +34,33 @@ public class RobotContainer {
   private final CommandJoystick controller = new CommandJoystick(0);
   private final CommandJoystick buttons = new CommandJoystick(1);
 
-  private static final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
+  // private static final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   // private static final Drive s_Drive = new Drive();
-  private static final Wrist s_Wrist = new Wrist();
+  // private static final Wrist s_Wrist = new Wrist();
   // private static final Shooter s_Shooter = new Shooter();
-  private static final Swerve s_Swerve = new Swerve();
+  // public static final Swerve s_Swerve = new Swerve();
+  // public static final Climb s_Climb = new Climb();
+  // public static final InOuttake s_InOuttake = new InOuttake();
+  public static final armWrist s_ArmWrist = new armWrist();
+  // public static final wristShooter s_WristShooter = new wristShooter();
+  public static final wristIntake s_WristIntake = new wristIntake();
+  // public static final LEDs s_LEDs = new LEDs();
 
   // public static final AutoBuilder autoBuilder = new AutoBuilder();
   public static final SendableChooser <Command> m_chooser = new SendableChooser<>();
-  public static final CrescendoTest1 shootToIntake1 = new CrescendoTest1(s_Swerve);
+  // public static final CrescendoTest1 shootToIntake1 = new CrescendoTest1(s_Swerve);
   
+  public static final ArmWristPos eleUp = new ArmWristPos(s_ArmWrist, Constants.Wrists.Arm.ArmMode.Score);
+  public static final ArmWristPos eleDown = new ArmWristPos(s_ArmWrist, Constants.Wrists.Arm.ArmMode.Stow);
+
+  // public static final RunInOuttake 
+
+  // public static final IntakeWristPos wristDown = new IntakeWristPos(s_WristIntake, Constants.Wrists.Intake.IntakeMode.Down);
+  // public static final IntakeWristPos wristStow = new IntakeWristPos(s_WristIntake, Constants.Wrists.Intake.IntakeMode.Stow);
+  // public static final IntakeWristPos wristFeed = new IntakeWristPos(s_WristIntake, Constants.Wrists.Intake.IntakeMode.Feed);
+
+  // public static final LEDset LEDsGreen = new LEDset(s_LEDs, Constants.LEDs.Colors.Green);
+  // public static final LEDset LEDsOrange = new LEDset(s_LEDs, Constants.LEDs.Colors.Orange);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -59,11 +81,15 @@ public class RobotContainer {
    * joysticks}.
    */
   private void configureBindings() {
-    m_chooser.addOption("Auto", shootToIntake1);
+    // m_chooser.addOption("Auto", shootToIntake1);
     SmartDashboard.putData("AutoChooser", m_chooser);
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
     // controller.button(13).onTrue(new spinShooter(s_Shooter, 1)).onFalse(new spinShooter(s_Shooter, 0));
     // controller.button(14).onTrue(new spinShooter(s_Shooter, -1)).onFalse(new spinShooter(s_Shooter, 0));
+    buttons.button(4).onTrue(eleUp);
+    buttons.button(5).onTrue(eleDown);
+    // buttons.button(10).onTrue(LEDsGreen);
+    // buttons.button(11).onTrue(LEDsOrange);
 
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
