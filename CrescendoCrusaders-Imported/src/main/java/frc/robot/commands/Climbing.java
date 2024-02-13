@@ -37,12 +37,6 @@ public class Climbing extends Command {
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-      if (pos == Constants.Climb.Position.Up) {
-        return Math.abs(s_Climb.climbMotorL.getEncoder().getPosition() - Constants.Climb.GlobalSetpoints.elevatorUpPos) < 1000
-                && Math.abs(s_Climb.climbMotorR.getEncoder().getPosition() - Constants.Climb.GlobalSetpoints.elevatorUpPos) < 1000;
-      } else {
-        return Math.abs(s_Climb.climbMotorR.getEncoder().getPosition() - Constants.Climb.GlobalSetpoints.elevatorDefaultPos) < 1000
-                && Math.abs(s_Climb.climbMotorR.getEncoder().getPosition() - Constants.Climb.GlobalSetpoints.elevatorUpPos) < 1000;
-      }
+      return false;
     }
 }

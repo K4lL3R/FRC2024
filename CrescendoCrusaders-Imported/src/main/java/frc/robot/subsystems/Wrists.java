@@ -7,7 +7,7 @@ import com.revrobotics.SparkPIDController;
 import com.revrobotics.CANSparkBase.ControlType;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
-import edu.wpi.first.wpilibj.DutyCycle;
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -22,21 +22,25 @@ public class Wrists {
         return ((rot / (78.125)) * 360.0);
     }
 
-    public static class wristIntake extends SubsystemBase {
-        public CANSparkMax wristMotorIntake;
+    public static class Wrist extends SubsystemBase {
+        public CANSparkMax wristMotor;
         public SparkPIDController intakeController;
-        public DutyCycleEncoder intakeWristEncoder;
+        public DutyCycleEncoder WristEncoder;
 
 
 
-        public wristIntake() {
-            wristMotorIntake = new CANSparkMax(27, MotorType.kBrushless);
+        public Wrist() {
+            wristMotor = new CANSparkMax(27, MotorType.kBrushless);
+            wristMotor.setSmartCurrentLimit(40);
+            wristMotor.enableVoltageCompensation(12);
 
-            intakeController = wristMotorIntake.getPIDController();
+            intakeController = wristMotor.getPIDController();
             intakeController.setFF(0.0016);
-            wristToPositionIntake(Constants.Wrists.Intake.IntakeMode.Stow);
+            intakeController.setSmartMotionAllowedClosedLoopError(0.8, 0);
+            intakeController.setSmartMotionMaxVelocity(500000, 0);
+            intakeController.setSmartMotionMaxAccel(100000, 0);
 
-            intakeWristEncoder = new DutyCycleEncoder(0);
+            WristEncoder = new DutyCycleEncoder(0);
         }
 
         public void wristToPositionIntake(Constants.Wrists.Intake.IntakeMode intake) {
@@ -53,9 +57,10 @@ public class Wrists {
         @Override
         public void periodic() {
             // TODO Auto-generated method stub
-            SmartDashboard.putNumber("Wrist Encoder Value", intakeWristEncoder.getAbsolutePosition());
+            SmartDashboard.putNumber("Wrist Encoder Value", WristEncoder.getAbsolutePosition());
             // SmartDashboard.putNumber("Wrist Non-Absolute", intakeWristEncoder.setDistancePerRotationDistancePerRotation());
-            SmartDashboard.putNumber("Wrist Encoder Value nonAbs", wristMotorIntake.getEncoder().getPosition());
+            SmartDashboard.putNumber("Wrist Encoder Value nonAbs", wristMotor.getEncoder().getPosition());
+
         }
     }
 
@@ -66,19 +71,27 @@ public class Wrists {
 
         public wristShooter() {
             wristShooter = new CANSparkMax(25, MotorType.kBrushless);
+            wristShooter.setSmartCurrentLimit(40);
+            wristShooter.enableVoltageCompensation(12);
 
             shootController = wristShooter.getPIDController();
             shootController.setFF(0.0016);
-            wristToPositionShooter(Constants.Wrists.Shooter.ShooterMode.Close);
+            shootController.setSmartMotionAllowedClosedLoopError(0.8, 0);
+            shootController.setSmartMotionMaxVelocity(500000, 0);
+            shootController.setSmartMotionMaxAccel(100000, 0);
 
             shootWristEncoder = new DutyCycleEncoder(3);
         }
 
-        public void wristToPositionShooter(Constants.Wrists.Shooter.ShooterMode shooter) {
+        public void wristToPositionShooter(Constants.Wrists.ShooterConst.ShooterMode shooter) {
             switch (shooter) {
-                case Close: shootController.setReference(Constants.Wrists.Shooter.closeSetPoint, ControlType.kSmartMotion);
+                case ClimbLock: shootController.setReference(Constants.Wrists.ShooterConst.climbLock, ControlType.kSmartMotion);
                 break;
-                case Down: shootController.setReference(Constants.Wrists.Shooter.downSetPoint, ControlType.kSmartMotion);
+                case Down: shootController.setReference(Constants.Wrists.ShooterConst.downSetPoint, ControlType.kSmartMotion);
+                break;
+                case Shooting: shootController.setReference(Constants.Wrists.ShooterConst.shooterSetPoint, ControlType.kSmartMotion);
+                break;
+                case FarShots: shootController.setReference(Constants.Wrists.ShooterConst.farShots, ControlType.kSmartMotion);
                 break;
             }
         }
@@ -98,18 +111,22 @@ public class Wrists {
 
         public DutyCycleEncoder armEncoder;
 
+        public PIDController pidTest;
+
         public armWrist() {
 
-            wristMotorArm = new CANSparkMax(26, MotorType.kBrushless);
+            wristMotorArm = new CANSparkMax(20, MotorType.kBrushless);
             wristMotorArm.setSmartCurrentLimit(40);
             wristMotorArm.enableVoltageCompensation(12);
             armController = wristMotorArm.getPIDController();
-            armController.setP(0.00);
-            armController.setD(0.00);
-            // armController.setFF(0.00019);
+            // armController.setP(0.00006);
+            // armController.setD(0.0003);
+            armController.setFF(0.00013);
             armController.setSmartMotionAllowedClosedLoopError(0.8, 0);
             armController.setSmartMotionMaxVelocity(500000, 0);
             armController.setSmartMotionMaxAccel(100000, 0);
+            pidTest = new PIDController(0.00006, 0, 0.0003);
+            pidTest.setSetpoint(Constants.Wrists.Arm.stowSetPoint);
 
             // wristToPositionArm(Constants.Wrists.Arm.ArmMode.Stow);
 
@@ -122,8 +139,22 @@ public class Wrists {
                     break;
                 case Score: armController.setReference(Constants.Wrists.Arm.scoreSetPoint, ControlType.kSmartMotion);
                     break;
+                case Feed: armController.setReference(Constants.Wrists.Arm.feedSetPoint, ControlType.kSmartMotion);
+                    break;
             }
         }
+
+        public void setSetpoint(Constants.Wrists.Arm.ArmMode arm) {
+            switch (arm) {
+                case Stow: pidTest.setSetpoint(Constants.Wrists.Arm.stowSetPoint);
+                    break;
+                case Score: pidTest.setSetpoint(Constants.Wrists.Arm.scoreSetPoint);
+                    break;
+                case Feed: pidTest.setSetpoint(Constants.Wrists.Arm.feedSetPoint);
+                    break;
+            }
+        }
+
         @Override
         public void periodic() {
             // TODO Auto-generated method stub
@@ -132,7 +163,11 @@ public class Wrists {
             SmartDashboard.putNumber("Wrist Arm Encoder Value nonAbs", wristMotorArm.getEncoder().getPosition());
             SmartDashboard.putNumber("Arm", wristMotorArm.getEncoder().getPosition());
             SmartDashboard.putNumber("Volt", wristMotorArm.getEncoder().getVelocity());
+            SmartDashboard.putBoolean("getName()", armEncoder.isConnected());
+            
+            // wristMotorArm.set(pidTest.calculate(wristMotorArm.getEncoder().getPosition(), pidTest.getSetpoint()));
         }
+
     }
 }
 //config and change position of wrist to down for intaking, aligned with shooter to feed into shooter

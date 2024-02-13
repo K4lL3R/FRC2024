@@ -5,15 +5,15 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
 import frc.robot.commands.Climbing;
-import frc.robot.commands.wrists.ShooterWristPos;
+import frc.robot.commands.wrists.ArmWristPos;
 
 
-public class Sequence1 extends SequentialCommandGroup {
-    public Sequence1(Constants.Climb.Position elePos, Constants.Wrists.ShooterConst.ShooterMode mode) {
+public class Sequence3 extends SequentialCommandGroup {
+    public Sequence3(Constants.Climb.Position elePos, Constants.Wrists.Arm.ArmMode mode) {
         addCommands( 
             new ParallelCommandGroup(
-                new ShooterWristPos(RobotContainer.s_WristShooter, mode),
-                new Climbing(RobotContainer.s_Climb, elePos)
+                new Climbing(RobotContainer.s_Climb, elePos),
+                new ArmWristPos(RobotContainer.s_ArmWrist, mode)
             )
         );
 

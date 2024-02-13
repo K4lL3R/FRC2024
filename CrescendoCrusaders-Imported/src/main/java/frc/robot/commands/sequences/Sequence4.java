@@ -4,16 +4,16 @@ import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
-import frc.robot.commands.Climbing;
-import frc.robot.commands.wrists.ShooterWristPos;
+import frc.robot.commands.wrists.ArmWristPos;
+import frc.robot.commands.wrists.IntakeWristPos;
 
 
-public class Sequence1 extends SequentialCommandGroup {
-    public Sequence1(Constants.Climb.Position elePos, Constants.Wrists.ShooterConst.ShooterMode mode) {
+public class Sequence4 extends SequentialCommandGroup {
+    public Sequence4(Constants.Wrists.Intake.IntakeMode intakeMode, Constants.Wrists.Arm.ArmMode mode) {
         addCommands( 
             new ParallelCommandGroup(
-                new ShooterWristPos(RobotContainer.s_WristShooter, mode),
-                new Climbing(RobotContainer.s_Climb, elePos)
+                new IntakeWristPos(RobotContainer.s_Wrist, intakeMode),
+                new ArmWristPos(RobotContainer.s_ArmWrist, mode)
             )
         );
 

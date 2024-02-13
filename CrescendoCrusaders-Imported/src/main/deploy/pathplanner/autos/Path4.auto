@@ -2,19 +2,19 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 14.07,
-      "y": 4.87
+      "x": 1.58,
+      "y": 5.43
     },
-    "rotation": 120.96
+    "rotation": 0.0
   },
   "command": {
     "type": "sequential",
     "data": {
       "commands": [
         {
-          "type": "path",
+          "type": "named",
           "data": {
-            "pathName": "IntakeDisc2ToShoot3"
+            "name": "IntakeDown"
           }
         }
       ]
