@@ -18,6 +18,10 @@ public class InOuttake {
             shooterMotorUp = new CANSparkMax(44, MotorType.kBrushless);
             shooterMotorDown = new CANSparkMax(43, MotorType.kBrushless);
             shooterMotorHold = new CANSparkMax(42, MotorType.kBrushless);
+            shooterMotorUp.enableVoltageCompensation(12);
+            shooterMotorDown.enableVoltageCompensation(12);
+            shooterMotorHold.enableVoltageCompensation(12);
+
         }
 
         public void runFlyWheels(double power) {
@@ -39,7 +43,7 @@ public class InOuttake {
             armOuttakeMotor = new CANSparkMax(40, MotorType.kBrushless);
             armOuttakeMotor.setIdleMode(IdleMode.kBrake);
 
-            armBeamBreak = new DigitalInput(9);
+            armBeamBreak = new DigitalInput(8);
         }
 
         public void runArmOuttake(double power) {
@@ -69,7 +73,7 @@ public class InOuttake {
 
         wristIntakeMotor = new CANSparkMax(41, MotorType.kBrushless);
 
-        wristBeamBreak = new DigitalInput(7);
+        wristBeamBreak = new DigitalInput(9);
         
         }
 

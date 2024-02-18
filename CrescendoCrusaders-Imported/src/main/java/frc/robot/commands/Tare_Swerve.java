@@ -5,15 +5,17 @@ import frc.robot.subsystems.CommandSwerveDrivetrain;
 
 public class Tare_Swerve extends Command{
     CommandSwerveDrivetrain swerveSubsys;
+    double deg;
 
-    public Tare_Swerve(CommandSwerveDrivetrain swerve) {
+    public Tare_Swerve(CommandSwerveDrivetrain swerve, double deg) {
         swerveSubsys = swerve;
         addRequirements(swerve);
+        this.deg = deg;
     }
 
     @Override
     public void initialize() {
-        swerveSubsys.tare_Swerve();
+        swerveSubsys.tare_Swerve(deg);
     }
 
     @Override

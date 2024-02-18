@@ -47,13 +47,15 @@ public final class Constants {
             public static final double shooterSetPoint = -7;
             public static final double climbLock = -3.8;
             public static final double downSetPoint = -55.7;//-58 -21 -23.5
-            public static final double farShots = -21;//-21
+            public static final double farShots = -21.4;//-21
+            public static final double autoFar = -19.4;
 
             public enum ShooterMode {
                 ClimbLock,
                 Shooting,
                 Down,
-                FarShots
+                FarShots, 
+                AutoFar
             }
         }
 

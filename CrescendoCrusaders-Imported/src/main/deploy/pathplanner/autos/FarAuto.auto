@@ -3,9 +3,9 @@
   "startingPose": {
     "position": {
       "x": 1.58,
-      "y": 5.492382339971527
+      "y": 5.49
     },
-    "rotation": 0.0
+    "rotation": 0
   },
   "command": {
     "type": "sequential",
@@ -73,9 +73,34 @@
           "data": {
             "commands": [
               {
+                "type": "named",
+                "data": {
+                  "name": "ShootLock"
+                }
+              },
+              {
+                "type": "wait",
+                "data": {
+                  "waitTime": 0.1
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "race",
+          "data": {
+            "commands": [
+              {
                 "type": "path",
                 "data": {
-                  "pathName": "AutonPath1To"
+                  "pathName": "Auton4To"
+                }
+              },
+              {
+                "type": "wait",
+                "data": {
+                  "waitTime": 2.83
                 }
               },
               {
@@ -88,12 +113,6 @@
                 "type": "named",
                 "data": {
                   "name": "2"
-                }
-              },
-              {
-                "type": "wait",
-                "data": {
-                  "waitTime": 0.55
                 }
               }
             ]
@@ -129,34 +148,15 @@
                 }
               },
               {
-                "type": "wait",
-                "data": {
-                  "waitTime": 1.2
-                }
-              },
-              {
                 "type": "path",
                 "data": {
-                  "pathName": "AutonPath1Back"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "race",
-          "data": {
-            "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "1"
+                  "pathName": "Auton4Back"
                 }
               },
               {
                 "type": "wait",
                 "data": {
-                  "waitTime": 0.3
+                  "waitTime": 2.6
                 }
               }
             ]
@@ -169,38 +169,7 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "w"
-                }
-              },
-              {
-                "type": "wait",
-                "data": {
-                  "waitTime": 1.5
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "2"
-                }
-              },
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "AutonPath2To"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "race",
-          "data": {
-            "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "3"
+                  "name": "ShootHigh"
                 }
               },
               {
@@ -219,31 +188,6 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "WristUp"
-                }
-              },
-              {
-                "type": "wait",
-                "data": {
-                  "waitTime": 1.6
-                }
-              },
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "AutonPath2Back"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "race",
-          "data": {
-            "commands": [
-              {
-                "type": "named",
-                "data": {
                   "name": "1"
                 }
               },
@@ -261,15 +205,15 @@
           "data": {
             "commands": [
               {
-                "type": "named",
+                "type": "path",
                 "data": {
-                  "name": "w"
+                  "pathName": "Path5To"
                 }
               },
               {
-                "type": "wait",
+                "type": "named",
                 "data": {
-                  "waitTime": 1.6
+                  "name": "w"
                 }
               },
               {
@@ -279,9 +223,9 @@
                 }
               },
               {
-                "type": "path",
+                "type": "wait",
                 "data": {
-                  "pathName": "AutonPath3To"
+                  "waitTime": 3.04
                 }
               }
             ]
@@ -300,7 +244,7 @@
               {
                 "type": "wait",
                 "data": {
-                  "waitTime": 0.1
+                  "waitTime": 0.2
                 }
               }
             ]
@@ -317,15 +261,34 @@
                 }
               },
               {
-                "type": "wait",
+                "type": "path",
                 "data": {
-                  "waitTime": 1.6
+                  "pathName": "Path5Back"
                 }
               },
               {
-                "type": "path",
+                "type": "wait",
                 "data": {
-                  "pathName": "AutonPath3Back"
+                  "waitTime": 3.1
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "race",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "ShootHigh"
+                }
+              },
+              {
+                "type": "wait",
+                "data": {
+                  "waitTime": 0.1
                 }
               }
             ]
@@ -351,9 +314,28 @@
           }
         },
         {
-          "type": "named",
+          "type": "race",
           "data": {
-            "name": "StopShooter"
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "StopShooter"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "ShootLock"
+                }
+              },
+              {
+                "type": "wait",
+                "data": {
+                  "waitTime": 0.15
+                }
+              }
+            ]
           }
         }
       ]

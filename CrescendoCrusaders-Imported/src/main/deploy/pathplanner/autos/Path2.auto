@@ -18,7 +18,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "test1"
+                  "pathName": "AutonPath1To"
                 }
               },
               {
@@ -39,7 +39,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "test2"
+            "pathName": "AutonPath1Back"
           }
         }
       ]

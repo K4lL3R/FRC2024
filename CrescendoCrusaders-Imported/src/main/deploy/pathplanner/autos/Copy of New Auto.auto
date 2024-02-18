@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.58,
-      "y": 5.492382339971527
+      "x": 1.57,
+      "y": 5.95
     },
-    "rotation": 0.0
+    "rotation": 0
   },
   "command": {
     "type": "sequential",
@@ -22,19 +22,6 @@
                 }
               },
               {
-                "type": "wait",
-                "data": {
-                  "waitTime": 0.3
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "race",
-          "data": {
-            "commands": [
-              {
                 "type": "named",
                 "data": {
                   "name": "SpinShooter"
@@ -43,7 +30,7 @@
               {
                 "type": "wait",
                 "data": {
-                  "waitTime": 0.5
+                  "waitTime": 0.3
                 }
               }
             ]
@@ -62,7 +49,7 @@
               {
                 "type": "wait",
                 "data": {
-                  "waitTime": 0.3
+                  "waitTime": 0.1
                 }
               }
             ]
@@ -72,204 +59,16 @@
           "type": "race",
           "data": {
             "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "AutonPath1To"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "w"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "2"
-                }
-              },
-              {
-                "type": "wait",
-                "data": {
-                  "waitTime": 0.55
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "race",
-          "data": {
-            "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "3"
-                }
-              },
-              {
-                "type": "wait",
-                "data": {
-                  "waitTime": 0.2
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "race",
-          "data": {
-            "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "WristUp"
-                }
-              },
-              {
-                "type": "wait",
-                "data": {
-                  "waitTime": 1.2
-                }
-              },
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "AutonPath1Back"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "race",
-          "data": {
-            "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "1"
-                }
-              },
-              {
-                "type": "wait",
-                "data": {
-                  "waitTime": 0.3
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "race",
-          "data": {
-            "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "w"
-                }
-              },
-              {
-                "type": "wait",
-                "data": {
-                  "waitTime": 1.5
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "2"
-                }
-              },
               {
                 "type": "path",
                 "data": {
                   "pathName": "AutonPath2To"
                 }
-              }
-            ]
-          }
-        },
-        {
-          "type": "race",
-          "data": {
-            "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "3"
-                }
               },
-              {
-                "type": "wait",
-                "data": {
-                  "waitTime": 0.1
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "race",
-          "data": {
-            "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "WristUp"
-                }
-              },
-              {
-                "type": "wait",
-                "data": {
-                  "waitTime": 1.6
-                }
-              },
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "AutonPath2Back"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "race",
-          "data": {
-            "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "1"
-                }
-              },
-              {
-                "type": "wait",
-                "data": {
-                  "waitTime": 0.3
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "race",
-          "data": {
-            "commands": [
               {
                 "type": "named",
                 "data": {
                   "name": "w"
-                }
-              },
-              {
-                "type": "wait",
-                "data": {
-                  "waitTime": 1.6
                 }
               },
               {
@@ -279,9 +78,15 @@
                 }
               },
               {
-                "type": "path",
+                "type": "wait",
                 "data": {
-                  "pathName": "AutonPath3To"
+                  "waitTime": 1.3
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "ShootLock"
                 }
               }
             ]
@@ -313,19 +118,19 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "WristUp"
+                  "name": "ShootFar"
                 }
               },
               {
                 "type": "wait",
                 "data": {
-                  "waitTime": 1.6
+                  "waitTime": 1.0
                 }
               },
               {
-                "type": "path",
+                "type": "named",
                 "data": {
-                  "pathName": "AutonPath3Back"
+                  "name": "WristUp"
                 }
               }
             ]
@@ -344,16 +149,92 @@
               {
                 "type": "wait",
                 "data": {
-                  "waitTime": 0.3
+                  "waitTime": 0.15
                 }
               }
             ]
           }
         },
         {
-          "type": "named",
+          "type": "race",
           "data": {
-            "name": "StopShooter"
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Auto6To"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "w"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "2"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "race",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "3"
+                }
+              },
+              {
+                "type": "wait",
+                "data": {
+                  "waitTime": 0.1
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "race",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Auto6Back"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "WristUp"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "race",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "StopShooter"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "ShootLock"
+                }
+              }
+            ]
           }
         }
       ]

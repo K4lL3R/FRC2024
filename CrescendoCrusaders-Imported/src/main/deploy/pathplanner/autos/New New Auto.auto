@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 14.62,
-      "y": 6.62
+      "x": 1.5833688728718394,
+      "y": 5.492382339971527
     },
-    "rotation": -23.19999999999999
+    "rotation": 0
   },
   "command": {
     "type": "sequential",
@@ -14,7 +14,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Shoot3ToIntakeDisc3"
+            "pathName": "AutonPath1To"
           }
         }
       ]

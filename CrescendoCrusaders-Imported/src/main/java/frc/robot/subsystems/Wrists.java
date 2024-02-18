@@ -75,7 +75,7 @@ public class Wrists {
             wristShooter.enableVoltageCompensation(12);
 
             shootController = wristShooter.getPIDController();
-            shootController.setFF(0.0016);
+            shootController.setFF(0.0015);
             shootController.setSmartMotionAllowedClosedLoopError(0.8, 0);
             shootController.setSmartMotionMaxVelocity(500000, 0);
             shootController.setSmartMotionMaxAccel(100000, 0);
@@ -93,6 +93,7 @@ public class Wrists {
                 break;
                 case FarShots: shootController.setReference(Constants.Wrists.ShooterConst.farShots, ControlType.kSmartMotion);
                 break;
+                case AutoFar: shootController.setReference(Constants.Wrists.ShooterConst.autoFar, ControlType.kSmartMotion);
             }
         }
 

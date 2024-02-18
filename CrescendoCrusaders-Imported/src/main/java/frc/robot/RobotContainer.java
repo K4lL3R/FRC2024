@@ -21,7 +21,6 @@ import frc.robot.subsystems.Wrists.wristShooter;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.configs.CurrentLimitsConfigs;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveRequest;
-import com.pathplanner.lib.auto.NamedCommands;
 
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -29,7 +28,9 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import edu.wpi.first.math.MathUtil;
 
+import com.pathplanner.lib.auto.*;
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
  * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
@@ -60,8 +61,8 @@ public class RobotContainer {
   public static final LEDs s_LEDs = new LEDs();
 
   // public static final AutoBuilder autoBuilder = new AutoBuilder();
-  public static final SendableChooser <Command> m_chooser = new SendableChooser<>();
-  public static final CrescendoTest1 autoTest = new CrescendoTest1("Path4");
+  public static SendableChooser <Command> m_chooser;
+  // public static final CrescendoTest1 autoTest = new CrescendoTest1("Path4");
 
   public static final Sequence1 sequence = new Sequence1(Constants.Climb.Position.Up, Constants.Wrists.ShooterConst.ShooterMode.Down);
   public static final Sequence1 sequence1pt2 = new Sequence1(Constants.Climb.Position.Down, Constants.Wrists.ShooterConst.ShooterMode.ClimbLock);
@@ -73,7 +74,8 @@ public class RobotContainer {
   public static final FeedSequence feeding = new FeedSequence(-0.5);
   public static final FeedSequence stopFeed = new FeedSequence(0);
 
-  public static final Tare_Swerve tareSwerve = new Tare_Swerve(drivetrain);
+  public static final Tare_Swerve tareSwerve = new Tare_Swerve(drivetrain, 0);
+  public static final Tare_Swerve tareSwerve135 = new Tare_Swerve(drivetrain, 135);
   
   public static final ArmWristPos armScore = new ArmWristPos(s_ArmWrist, Constants.Wrists.Arm.ArmMode.Score);
   public static final ArmWristPos armStow = new ArmWristPos(s_ArmWrist, Constants.Wrists.Arm.ArmMode.Stow);
@@ -115,8 +117,29 @@ public class RobotContainer {
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the trigger bindings
-    drivetrain.tare_Swerve();
+    NamedCommands.registerCommand("w", new IntakeWristPos(s_Wrist, Constants.Wrists.Intake.IntakeMode.Down));
+    NamedCommands.registerCommand("WristUp", new IntakeWristPos(s_Wrist, Constants.Wrists.Intake.IntakeMode.Feed));
+    NamedCommands.registerCommand("SpinShooter", new RunShooter(s_ShooterOuttake, 1, -0.7));
+    NamedCommands.registerCommand("StopShooter", new RunShooter(s_ShooterOuttake, 0, 0));
+    NamedCommands.registerCommand("1", new RunWristIntake(s_WristIntake, -1));
+    NamedCommands.registerCommand("2", new RunWristIntake(s_WristIntake, 1));
+    NamedCommands.registerCommand("3", new RunWristIntake(s_WristIntake, 0));
+    NamedCommands.registerCommand("ShootHigh", new ShooterWristPos(s_WristShooter, Constants.Wrists.ShooterConst.ShooterMode.Shooting));
+    NamedCommands.registerCommand("ShootLock", new ShooterWristPos(s_WristShooter, Constants.Wrists.ShooterConst.ShooterMode.ClimbLock));
+    NamedCommands.registerCommand("ShootFar", new ShooterWristPos(s_WristShooter, Constants.Wrists.ShooterConst.ShooterMode.FarShots));
+
+    drivetrain.configPathPlanner();
+    m_chooser = AutoBuilder.buildAutoChooser();
+    // m_chooser.setDefaultOption("autoTest", new CrescendoTest1("Ne"));
+    m_chooser.setDefaultOption("Autotest", new CrescendoTest1("Path4"));
+    m_chooser.addOption("FarAuto", new CrescendoTest1("Copy of FarAuto"));
+    m_chooser.addOption("5Note", new CrescendoTest1("New Auto"));
+    m_chooser.addOption("test", new CrescendoTest1("Copy of New Auto"));
+    m_chooser.addOption("ClearAuto", new CrescendoTest1("ClearAuto"));
+
+    // drivetrain.tare_Swerve();
     configureBindings();
+    SmartDashboard.putData("Auto", m_chooser);
     drivetrain.getModule(0).getDriveMotor().getConfigurator().apply(currentConfigs);
     drivetrain.getModule(0).getSteerMotor().getConfigurator().apply(currentConfigs);
     drivetrain.getModule(1).getDriveMotor().getConfigurator().apply(currentConfigs);
@@ -129,10 +152,10 @@ public class RobotContainer {
 
     // s_Drive.setDefaultCommand(new TeleopDrive(s_Drive, controller));
     drivetrain.setDefaultCommand( // Drivetrain will execute this command periodically
-        drivetrain.applyRequest(() -> drive.withVelocityX(-controller.getY() * MaxSpeed) // Drive forward with
+        drivetrain.applyRequest(() -> drive.withVelocityX(-MathUtil.applyDeadband(controller.getY(), 0.1) * MaxSpeed) // Drive forward with
                                                                                            // negative Y (forward)
-            .withVelocityY(-controller.getX() * MaxSpeed) // Drive left with negative X (left)
-            .withRotationalRate(-controller.getZ() * MaxAngularRate) // Drive counterclockwise with negative X (left)
+            .withVelocityY(-MathUtil.applyDeadband(controller.getX(), 0.1) * MaxSpeed) // Drive left with negative X (left)
+            .withRotationalRate(-MathUtil.applyDeadband(controller.getZ(), 0.1) * MaxAngularRate) // Drive counterclockwise with negative X (left)
         ));
   }
 
@@ -146,11 +169,9 @@ public class RobotContainer {
    * joysticks}.
    */
   private void configureBindings() {
-    m_chooser.setDefaultOption("autoTest", autoTest);
     Trigger armBeamBreak = new Trigger(() -> s_Arm.getIsBeamBrakeBroken());
     Trigger wristBeamBreak = new Trigger(() -> s_WristIntake.getIsBeamBrakeBroken());
     // m_chooser.addOption("Auto", shootToIntake1);
-    SmartDashboard.putData("AutoChooser", m_chooser);
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
     // controller.button(13).onTrue(new spinShooter(s_Shooter, 1)).onFalse(new spinShooter(s_Shooter, 0));
     // controller.button(14).onTrue(new spinShooter(s_Shooter, -1)).onFalse(new spinShooter(s_Shooter, 0));
@@ -180,6 +201,9 @@ public class RobotContainer {
     // controller.button(4).onTrue(feeding).onFalse(stopFeed);
     controller.button(3).and(armBeamBreak.negate()).whileTrue(feeding);
     controller.button(9).onTrue(LEDsGreen);
+    controller.button(14).onTrue(tareSwerve135);
+
+    // controller.pov(0).whileTrue(drivetrain.runDriveQuasiTest());
 
     // controller.button(3).onTrue(spinShooter);
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
@@ -198,15 +222,5 @@ public class RobotContainer {
     return m_chooser.getSelected();
   }
 
-  public static void configAutoCommands() {
-      NamedCommands.registerCommand("IntakeDown", RobotContainer.wristDown);
-      NamedCommands.registerCommand("Intake Feed to Shooter", RobotContainer.wristFeed);
-      NamedCommands.registerCommand("Spin Shooter", RobotContainer.spinShooter);
-      NamedCommands.registerCommand("Stop Shooter", RobotContainer.stopShooter);
-      NamedCommands.registerCommand("RunIntake", RobotContainer.intakeDisc);
-      NamedCommands.registerCommand("Stop Intake", RobotContainer.stopWristIntake);
-      NamedCommands.registerCommand("Feed Disc to Shooter", RobotContainer.outtakeDisc);
-      NamedCommands.registerCommand("ShootFromClose", RobotContainer.shootWristShooting);
-      NamedCommands.registerCommand("Shoot From Far", RobotContainer.shootFromFar);
-  }
+
 }

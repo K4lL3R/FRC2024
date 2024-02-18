@@ -21,7 +21,7 @@ public class FeedSequence extends SequentialCommandGroup {
         } else {
             addCommands(
                 new ParallelCommandGroup(
-                    new RunArmOuttake(RobotContainer.s_Arm, -power * 0.7),
+                    new RunArmOuttake(RobotContainer.s_Arm, -power * 0.6),
                     new RunWristIntake(RobotContainer.s_WristIntake, power)
                 )
             );
