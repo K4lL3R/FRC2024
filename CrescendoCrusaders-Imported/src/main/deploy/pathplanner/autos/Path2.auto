@@ -2,19 +2,44 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 14.35,
-      "y": 3.97
+      "x": 1.58,
+      "y": 5.49
     },
-    "rotation": 173.66
+    "rotation": 0
   },
   "command": {
     "type": "sequential",
     "data": {
       "commands": [
         {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "AutonPath1To"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "IntakeDown"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "RunIntake"
+                }
+              }
+            ]
+          }
+        },
+        {
           "type": "path",
           "data": {
-            "pathName": "IntakeDisc1ToShoot2"
+            "pathName": "AutonPath1Back"
           }
         }
       ]

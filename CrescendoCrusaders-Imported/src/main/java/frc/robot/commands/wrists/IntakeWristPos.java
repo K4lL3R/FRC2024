@@ -5,10 +5,10 @@ import frc.robot.Constants;
 import frc.robot.subsystems.*;
 
 public class IntakeWristPos extends Command {
-    Wrists.wristIntake wristIntake;
+    Wrists.Wrist wristIntake;
     Constants.Wrists.Intake.IntakeMode pos;
   
-    public IntakeWristPos(Wrists.wristIntake wristIntake, Constants.Wrists.Intake.IntakeMode pos) {
+    public IntakeWristPos(Wrists.Wrist wristIntake, Constants.Wrists.Intake.IntakeMode pos) {
       this.wristIntake = wristIntake;
       addRequirements(wristIntake);
 
@@ -29,7 +29,7 @@ public class IntakeWristPos extends Command {
     @Override
     public void end(boolean interrupted) {
       if (interrupted) {
-        wristIntake.wristMotorIntake.set(0);
+        wristIntake.wristMotor.set(0);
       }
     }
 

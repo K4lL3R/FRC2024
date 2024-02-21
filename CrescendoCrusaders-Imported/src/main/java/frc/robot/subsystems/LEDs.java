@@ -1,21 +1,24 @@
 package frc.robot.subsystems;
 
-import edu.wpi.first.wpilibj.motorcontrol.Spark;
+import com.ctre.phoenix.led.CANdle;
+import com.ctre.phoenix.led.CANdle.LEDStripType;
+
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class LEDs extends SubsystemBase {
-    public static Spark mLEDs;
+    public static CANdle mLEDs;
 
     public LEDs() {
-        mLEDs = new Spark(0);
+        mLEDs = new CANdle(61);
+        mLEDs.configLEDType(LEDStripType.RGB);
     }
 
     public void setLEDs(Constants.LEDs.Colors color) {
         switch (color) {
-            case Green: mLEDs.set(0);
+            case Green: mLEDs.setLEDs(5, 10, 30);
             break;
-            case Orange: mLEDs.set(1);
+            case Orange: mLEDs.setLEDs(155, 10, 30);
             break;
         }
     }

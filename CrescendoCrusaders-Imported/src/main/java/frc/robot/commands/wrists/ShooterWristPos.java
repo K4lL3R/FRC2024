@@ -6,9 +6,9 @@ import frc.robot.subsystems.*;
 
 public class ShooterWristPos extends Command {
     Wrists.wristShooter shooter;
-    Constants.Wrists.Shooter.ShooterMode pos;
+    Constants.Wrists.ShooterConst.ShooterMode pos;
   
-    public ShooterWristPos(Wrists.wristShooter shooter, Constants.Wrists.Shooter.ShooterMode pos) {
+    public ShooterWristPos(Wrists.wristShooter shooter, Constants.Wrists.ShooterConst.ShooterMode pos) {
       this.shooter = shooter;
       addRequirements(shooter);
 
@@ -28,6 +28,7 @@ public class ShooterWristPos extends Command {
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
+      
       if (interrupted) {
         shooter.wristShooter.set(0);
       }
