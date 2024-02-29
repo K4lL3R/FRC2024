@@ -72,6 +72,7 @@ public class InOuttake {
         public WristIntake() {
 
         wristIntakeMotor = new CANSparkMax(41, MotorType.kBrushless);
+        wristIntakeMotor.setIdleMode(IdleMode.kBrake);
 
         wristBeamBreak = new DigitalInput(9);
         

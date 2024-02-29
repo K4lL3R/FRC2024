@@ -5,20 +5,20 @@ import frc.robot.Constants;
 import frc.robot.subsystems.*;
 // import frc.robot.subsystems.LEDs.AnimationTypes;
 
-public class LEDset extends Command {
+public class ChangeAnimation extends Command {
     LEDs LEDsubsys;
-    Constants.LEDs.Colors color;
+    int i;
   
-    public LEDset(LEDs mLED, Constants.LEDs.Colors color) {
+    public ChangeAnimation(LEDs mLED, int i) {
       LEDsubsys = mLED;
       addRequirements(mLED);
 
-      this.color = color;
+      this.i = i;
     }
 
     @Override
     public void initialize() {
-       LEDsubsys.setLEDs(color);
+      LEDsubsys.setAnimation(i);
     }
 
     // Called every time the scheduler runs while the command is scheduled.
@@ -28,8 +28,7 @@ public class LEDset extends Command {
 
     // Called once the command ends or is interrupted.
     @Override
-    public void end(boolean interrupted) {
-    }
+    public void end(boolean interrupted) {}
 
     // Returns true when the command should end.
     @Override

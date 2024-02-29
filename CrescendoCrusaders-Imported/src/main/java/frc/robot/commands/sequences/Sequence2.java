@@ -1,12 +1,17 @@
 package frc.robot.commands.sequences;
 
+import com.ctre.phoenix6.signals.RobotEnableValue;
+
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Constants;
+import frc.robot.Robot;
 import frc.robot.RobotContainer;
+import frc.robot.commands.LEDset;
 import frc.robot.commands.RunWristIntake;
 import frc.robot.commands.wrists.IntakeWristPos;
 import frc.robot.subsystems.InOuttake;
+import frc.robot.commands.ChangeAnimation;
 
 
 public class Sequence2 extends SequentialCommandGroup {
@@ -16,6 +21,7 @@ public class Sequence2 extends SequentialCommandGroup {
                 new ParallelCommandGroup(
                     new IntakeWristPos(RobotContainer.s_Wrist, Constants.Wrists.Intake.IntakeMode.Feed),
                     new RunWristIntake(RobotContainer.s_WristIntake, 0)
+                    // new LEDset(RobotContainer.s_LEDs, Constants.LEDs.Colors.Green)
                 )
             );
         } else {
@@ -23,6 +29,7 @@ public class Sequence2 extends SequentialCommandGroup {
                 new ParallelCommandGroup(
                     new IntakeWristPos(RobotContainer.s_Wrist, mode),
                     new RunWristIntake(RobotContainer.s_WristIntake, power)
+                    // new LEDset(RobotContainer.s_LEDs, Constants.LEDs.Colors.Orange)
                 )
             );
         }

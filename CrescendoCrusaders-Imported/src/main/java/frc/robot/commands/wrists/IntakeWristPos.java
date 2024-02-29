@@ -11,6 +11,7 @@ public class IntakeWristPos extends Command {
     public IntakeWristPos(Wrists.Wrist wristIntake, Constants.Wrists.Intake.IntakeMode pos) {
       this.wristIntake = wristIntake;
       addRequirements(wristIntake);
+      
 
       this.pos = pos;
     }

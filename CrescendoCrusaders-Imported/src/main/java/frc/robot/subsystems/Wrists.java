@@ -35,6 +35,8 @@ public class Wrists {
             wristMotor.enableVoltageCompensation(12);
 
             intakeController = wristMotor.getPIDController();
+            // intakeController.setP(0.0003);
+            // intakeController.setD(0.00005);
             intakeController.setFF(0.0016);
             intakeController.setSmartMotionAllowedClosedLoopError(0.8, 0);
             intakeController.setSmartMotionMaxVelocity(500000, 0);

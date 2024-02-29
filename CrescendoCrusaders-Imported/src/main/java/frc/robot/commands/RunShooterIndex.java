@@ -1,29 +1,27 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Constants;
 import frc.robot.subsystems.*;
-// import frc.robot.subsystems.LEDs.AnimationTypes;
 
-public class LEDset extends Command {
-    LEDs LEDsubsys;
-    Constants.LEDs.Colors color;
+public class RunShooterIndex extends Command {
+    InOuttake.Shooter inOuttakeSubsys;
+    double powerHoldMotor;
   
-    public LEDset(LEDs mLED, Constants.LEDs.Colors color) {
-      LEDsubsys = mLED;
-      addRequirements(mLED);
-
-      this.color = color;
+    public RunShooterIndex(InOuttake.Shooter s_shooter, double powerHoldMotor) {
+      inOuttakeSubsys = s_shooter;
+      addRequirements(s_shooter);
+      this.powerHoldMotor = powerHoldMotor;
     }
 
     @Override
     public void initialize() {
-       LEDsubsys.setLEDs(color);
+        inOuttakeSubsys.runHoldingMotor(powerHoldMotor);
     }
 
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
+
     }
 
     // Called once the command ends or is interrupted.
@@ -34,6 +32,6 @@ public class LEDset extends Command {
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        return false;
+      return false;
     }
 }

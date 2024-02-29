@@ -10,27 +10,22 @@ import com.ctre.phoenix6.mechanisms.swerve.SwerveModuleConstants;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveRequest;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveRequest.FieldCentricFacingAngle;
 import com.pathplanner.lib.auto.AutoBuilder;
-import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.commands.PathPlannerAuto;
+import com.pathplanner.lib.path.PathConstraints;
 import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
 import com.pathplanner.lib.util.PIDConstants;
 import com.pathplanner.lib.util.ReplanningConfig;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-// import frc.lib.ModifiedSignalLogger;
-// import frc.lib.SwerveVoltageRequest;
 import frc.robot.*;
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
-import edu.wpi.first.units.Measure;
-import edu.wpi.first.units.Units;
-import edu.wpi.first.units.Voltage;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Notifier;
 import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Subsystem;
-import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 
 /**
  * Class that extends the Phoenix SwerveDrivetrain class and implements subsystem
@@ -93,7 +88,7 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
           new HolonomicPathFollowerConfig(
             new PIDConstants(10, 0, 0), 
             new PIDConstants(7,0,0), 
-            3.91, this.getDriveBaseRadius(), 
+            5.4, this.getDriveBaseRadius(), 
             new ReplanningConfig()),
           () -> {
             var alliance = DriverStation.getAlliance();
@@ -119,6 +114,7 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
         return new PathPlannerAuto(pathName);
     }
 
+
     private void startSimThread() {
         m_lastSimTime = Utils.getCurrentTimeSeconds();
 
@@ -142,13 +138,43 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
 
     }
 
+    // public PathPlannerPath findPathToScore() {
+    //     List<Translation2d> bezierPoints = PathPlannerPath.bezierFromPoses(
+    //         new Pose2d(this.getState().Pose.getX(), this.getState().Pose.getY(), Rotation2d.fromDegrees(160)),
+    //         new Pose2d(2.54, 2.37, Rotation2d.fromDegrees(115.79))
+    //     );
+
+    //     PathPlannerPath path = new PathPlannerPath(
+    //         bezierPoints, 
+    //         new PathConstraints(3.0, 3.0, 3 * Math.PI, 4 * Math.PI), 
+    //         new GoalEndState(0, Rotation2d.fromDegrees(-51.97)));
+    //     return path;
+    // }
+
+    public Command findPath() {
+        Pose2d targetPose = new Pose2d(2.54, 2.37, Rotation2d.fromDegrees(-51.97));
+        PathConstraints constraints = new PathConstraints(3, 4, 3 * Math.PI, 4 * Math.PI);
+
+        Command pathFind = AutoBuilder.pathfindToPose(targetPose, constraints, 0, 0);
+        return pathFind;
+    }
+
     @Override
     public void periodic() {
         for (int i = 0; i < 4; i++) {
             SmartDashboard.putNumber("DriveTempModule" + i + ": ", (RobotContainer.drivetrain.getModule(i).getDriveMotor().getDeviceTemp().getValue()) * (1.8) + 32);
             SmartDashboard.putNumber("AngleTempModule" + i + ": ", (RobotContainer.drivetrain.getModule(i).getSteerMotor().getDeviceTemp().getValue()) * (1.8) + 32);
+            SmartDashboard.putNumber("StatorCurrAngle" + i + "", RobotContainer.drivetrain.getModule(i).getSteerMotor().getStatorCurrent().getValue());
+            SmartDashboard.putNumber("SupplyCurrAngle" + i + "", RobotContainer.drivetrain.getModule(i).getSteerMotor().getSupplyCurrent().getValue());
+            SmartDashboard.putNumber("StatorCurr" + i + "", RobotContainer.drivetrain.getModule(i).getDriveMotor().getStatorCurrent().getValue());
+            SmartDashboard.putNumber("SupplyCurr" + i + "", RobotContainer.drivetrain.getModule(i).getDriveMotor().getSupplyCurrent().getValue());
+            SmartDashboard.putNumber("TorqueCurrAngle" + i + "", RobotContainer.drivetrain.getModule(i).getSteerMotor().getTorqueCurrent().getValue());
+            SmartDashboard.putNumber("TorqueCurr" + i + "", RobotContainer.drivetrain.getModule(i).getDriveMotor().getTorqueCurrent().getValue());
 
         }
+            SmartDashboard.putNumber("PoseX", this.getState().Pose.getX());
+            SmartDashboard.putNumber("PoseY", this.getState().Pose.getY());
+            SmartDashboard.putNumber("PoseRotation", this.getState().Pose.getRotation().getDegrees());
     }
 
     // public Command runDriveQuasiTest(SysIdRoutine.Direction direction)

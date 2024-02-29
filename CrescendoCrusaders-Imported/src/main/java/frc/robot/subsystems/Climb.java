@@ -56,6 +56,9 @@ public class Climb extends SubsystemBase {
             case Mid:   climbControllerL.setReference(Constants.Climb.GlobalSetpoints.midPos, ControlType.kSmartMotion);
                         climbControllerR.setReference(-Constants.Climb.GlobalSetpoints.midPos, ControlType.kSmartMotion);
             break;
+            case Amp:   climbControllerL.setReference(Constants.Climb.GlobalSetpoints.ampElevator, ControlType.kSmartMotion);
+                        climbControllerR.setReference(-Constants.Climb.GlobalSetpoints.ampElevator, ControlType.kSmartMotion);
+            break;
         }
 
     }

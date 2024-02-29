@@ -27,12 +27,14 @@ public final class Constants {
             public static final double midPos = 28;
             //mid 24
             public static final double elevatorDefaultPos = 0;
+            public static final double ampElevator = 30;
         }
 
         public enum Position {
             Up,
             Mid,
-            Down
+            Down,
+            Amp
         }
     }
 
@@ -48,7 +50,7 @@ public final class Constants {
             public static final double climbLock = -3.8;
             public static final double downSetPoint = -55.7;//-58 -21 -23.5
             public static final double farShots = -21.4;//-21
-            public static final double autoFar = -19.4;
+            public static final double autoFar = -19;
 
             public enum ShooterMode {
                 ClimbLock,
@@ -81,7 +83,7 @@ public final class Constants {
             public static final IdleMode idleMode = IdleMode.kBrake;
 
             public static final double intakeSetPoint = -39;
-            public static final double stowSetPoint = -5;
+            public static final double stowSetPoint = -5.5;
             public static final double feedSetPoint = 0;
 
             public enum IntakeMode {
@@ -109,6 +111,18 @@ public final class Constants {
         public enum Colors {
             Green,
             Orange
+        }
+        public enum AnimationTypes {  
+            ColorFlow,
+            Fire,
+            Larson,
+            Rainbow,
+            RgbFade,
+            SingleFade,
+            Strobe,
+            Twinkle,
+            TwinkleOff,
+            SetAll
         }
     }
 }

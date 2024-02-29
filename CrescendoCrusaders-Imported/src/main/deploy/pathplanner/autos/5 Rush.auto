@@ -62,7 +62,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Auton4To"
+                  "pathName": "Rush 1"
                 }
               },
               {
@@ -81,6 +81,12 @@
                 "type": "named",
                 "data": {
                   "name": "ShootLock"
+                }
+              },
+              {
+                "type": "wait",
+                "data": {
+                  "waitTime": 2.7
                 }
               }
             ]
@@ -112,7 +118,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Auton4Back"
+                  "pathName": "Rush 2"
                 }
               },
               {
@@ -156,7 +162,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "AutonPath2To"
+                  "pathName": "4pc 3"
                 }
               },
               {
@@ -175,6 +181,12 @@
                 "type": "named",
                 "data": {
                   "name": "ShootLock"
+                }
+              },
+              {
+                "type": "wait",
+                "data": {
+                  "waitTime": 1.45
                 }
               }
             ]
@@ -218,7 +230,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "AutonPath2Back"
+                  "pathName": "4pc 4"
                 }
               }
             ]
@@ -250,7 +262,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "AutonPath1To"
+                  "pathName": "4pc 1"
                 }
               },
               {
@@ -263,6 +275,12 @@
                 "type": "named",
                 "data": {
                   "name": "2"
+                }
+              },
+              {
+                "type": "wait",
+                "data": {
+                  "waitTime": 0.92
                 }
               }
             ]
@@ -294,7 +312,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "AutonPath1Back"
+                  "pathName": "4pc 2"
                 }
               },
               {
@@ -338,7 +356,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "AutonPath3To"
+                  "pathName": "4pc 5"
                 }
               },
               {
@@ -357,6 +375,12 @@
                 "type": "named",
                 "data": {
                   "name": "ShootLock"
+                }
+              },
+              {
+                "type": "wait",
+                "data": {
+                  "waitTime": 1.45
                 }
               }
             ]
@@ -388,7 +412,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Auto9"
+                  "pathName": "4pc 6"
                 }
               },
               {
