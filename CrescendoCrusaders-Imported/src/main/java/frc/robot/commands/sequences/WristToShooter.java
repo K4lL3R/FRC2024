@@ -6,7 +6,6 @@ import frc.robot.Constants;
 import frc.robot.RobotContainer;
 import frc.robot.commands.RunShooter;
 import frc.robot.commands.wrists.IntakeWristPos;
-import frc.robot.subsystems.Wrists.wristShooter;
 
 public class WristToShooter extends SequentialCommandGroup{
     public WristToShooter(double power, double holdWheel, Constants.Wrists.Intake.IntakeMode mode) {

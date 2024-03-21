@@ -1,17 +1,12 @@
 package frc.robot.commands.sequences;
 
-import com.ctre.phoenix6.signals.RobotEnableValue;
-
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Constants;
-import frc.robot.Robot;
 import frc.robot.RobotContainer;
-import frc.robot.commands.LEDset;
 import frc.robot.commands.RunWristIntake;
 import frc.robot.commands.wrists.IntakeWristPos;
 import frc.robot.subsystems.InOuttake;
-import frc.robot.commands.ChangeAnimation;
 
 
 public class Sequence2 extends SequentialCommandGroup {

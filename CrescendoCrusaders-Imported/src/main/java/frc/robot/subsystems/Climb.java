@@ -18,6 +18,10 @@ public class Climb extends SubsystemBase {
     public SparkPIDController climbControllerR;
     public DutyCycleEncoder elevatorEncL;
     public DutyCycleEncoder elevatorEncR;
+    // private double setpoint;
+    // private double currentPos;
+    // private double powerFF;
+    // private double kA = 1;
 
     public Climb() {
         climbMotorL = new CANSparkMax(31, MotorType.kBrushless);
@@ -47,26 +51,58 @@ public class Climb extends SubsystemBase {
 
     public void moveClimb(Constants.Climb.Position pos) {
         switch(pos) {
-            case Up:    climbControllerL.setReference(Constants.Climb.GlobalSetpoints.elevatorUpPos, ControlType.kSmartMotion);
+            case Up:    climbControllerL.setSmartMotionMaxVelocity(11000, 0);
+                        climbControllerR.setSmartMotionMaxVelocity(11000, 0);
+                        climbControllerL.setReference(Constants.Climb.GlobalSetpoints.elevatorUpPos, ControlType.kSmartMotion);
                         climbControllerR.setReference(-Constants.Climb.GlobalSetpoints.elevatorUpPos, ControlType.kSmartMotion);
             break;
-            case Down:  climbControllerL.setReference(Constants.Climb.GlobalSetpoints.elevatorDefaultPos, ControlType.kSmartMotion);
+            case Down:  climbControllerL.setSmartMotionMaxVelocity(Constants.Climb.maxVel, 0);
+                        climbControllerR.setSmartMotionMaxVelocity(Constants.Climb.maxVel, 0);
+                        climbControllerL.setReference(Constants.Climb.GlobalSetpoints.elevatorDefaultPos, ControlType.kSmartMotion);
                         climbControllerR.setReference(-Constants.Climb.GlobalSetpoints.elevatorDefaultPos, ControlType.kSmartMotion);
             break;
-            case Mid:   climbControllerL.setReference(Constants.Climb.GlobalSetpoints.midPos, ControlType.kSmartMotion);
+            case Mid:   climbControllerL.setSmartMotionMaxVelocity(11000, 0);
+                        climbControllerR.setSmartMotionMaxVelocity(11000, 0);
+                        climbControllerL.setReference(Constants.Climb.GlobalSetpoints.midPos, ControlType.kSmartMotion);
                         climbControllerR.setReference(-Constants.Climb.GlobalSetpoints.midPos, ControlType.kSmartMotion);
             break;
-            case Amp:   climbControllerL.setReference(Constants.Climb.GlobalSetpoints.ampElevator, ControlType.kSmartMotion);
+            case Amp:   climbControllerL.setSmartMotionMaxVelocity(11000, 0);
+                        climbControllerR.setSmartMotionMaxVelocity(11000, 0);
+                        climbControllerL.setReference(Constants.Climb.GlobalSetpoints.ampElevator, ControlType.kSmartMotion);
                         climbControllerR.setReference(-Constants.Climb.GlobalSetpoints.ampElevator, ControlType.kSmartMotion);
             break;
         }
 
     }
 
+    // public void setSetpoint(Constants.Climb.Position pos) {
+    //     switch(pos) {
+    //         case Up:    
+    //         setpoint = Constants.Climb.GlobalSetpoints.elevatorUpPos;
+    //         break;
+    //         case Down:  
+    //         setpoint = Constants.Climb.GlobalSetpoints.elevatorDefaultPos;
+    //         break;
+    //         case Mid: 
+    //         setpoint = Constants.Climb.GlobalSetpoints.midPos;
+    //         break;  
+    //         case Amp:   
+    //         setpoint = Constants.Climb.GlobalSetpoints.ampElevator;
+    //         break;
+    //     }
+    // }
+
+    // public double getAppliedPower() {
+
+    // }
+
     @Override
     public void periodic() {
         SmartDashboard.putNumber("ClimbL", climbMotorL.getEncoder().getPosition());
         SmartDashboard.putNumber("ClimbR", climbMotorR.getEncoder().getPosition());
+        // currentPos = climbMotorL.getEncoder().getPosition();
+        // currentPos = (kA * Math.pow(Timer.getFPGATimestamp(), 2)) / 2;
+        // List<E> list
     }
 }
 //config and run motor to raise and pull down lift for climb on chain

@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.51,
-        "y": 4.42
+        "x": 2.57,
+        "y": 4.06
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.0635131712488817,
-        "y": 4.649202108675259
+        "x": 1.9346939692452847,
+        "y": 4.19247948338978
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 1.4,
-        "y": 5.0
+        "x": 1.5131038535971502,
+        "y": 5.445538993788401
       },
       "prevControl": {
-        "x": 1.8132481519741923,
-        "y": 4.779876445601678
+        "x": 1.8644289499705955,
+        "y": 4.859997166499325
       },
       "nextControl": null,
       "isLocked": false,
@@ -30,7 +30,31 @@
   ],
   "rotationTargets": [],
   "constraintZones": [],
-  "eventMarkers": [],
+  "eventMarkers": [
+    {
+      "name": "New Event Marker",
+      "waypointRelativePos": 0,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "WristUp"
+              }
+            },
+            {
+              "type": "named",
+              "data": {
+                "name": "ShootHigh"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
   "globalConstraints": {
     "maxVelocity": 5.39,
     "maxAcceleration": 3.0,
@@ -39,13 +63,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -24.0,
-    "rotateFast": false
+    "rotation": 0.0,
+    "rotateFast": true
   },
   "reversed": false,
   "folder": "4 Piece Front",
   "previewStartingState": {
-    "rotation": -50.0,
+    "rotation": 0.0,
     "velocity": 0
   },
   "useDefaultConstraints": true

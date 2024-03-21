@@ -132,8 +132,9 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
 
     public void tare_Swerve(double deg) {
         TunerConstants.DriveTrain.getPigeon2().reset();
+        TunerConstants.DriveTrain.getPigeon2().getConfigurator().setYaw(deg);
 
-        // applyRequest(() -> fieldCentricAngle.withTargetDirection(Rotation2d.fromDegrees(deg)));
+        // this.applyRequest(() -> fieldCentricAngle.withTargetDirection(Rotation2d.fromDegrees(deg)));
 
 
     }
@@ -175,6 +176,9 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
             SmartDashboard.putNumber("PoseX", this.getState().Pose.getX());
             SmartDashboard.putNumber("PoseY", this.getState().Pose.getY());
             SmartDashboard.putNumber("PoseRotation", this.getState().Pose.getRotation().getDegrees());
+
+            SmartDashboard.putNumber("Gyro", this.getPigeon2().getYaw().getValueAsDouble());
+            SmartDashboard.putNumber("GyroAngle", this.getPigeon2().getAngle());
     }
 
     // public Command runDriveQuasiTest(SysIdRoutine.Direction direction)

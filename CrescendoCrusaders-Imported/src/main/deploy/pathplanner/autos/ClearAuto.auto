@@ -2,15 +2,21 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.96,
-      "y": 4.44
+      "x": 0.48,
+      "y": 4.25
     },
-    "rotation": -60.0
+    "rotation": 0.0
   },
   "command": {
     "type": "sequential",
     "data": {
       "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Clear Setup"
+          }
+        },
         {
           "type": "race",
           "data": {
@@ -87,7 +93,7 @@
               {
                 "type": "wait",
                 "data": {
-                  "waitTime": 0.05
+                  "waitTime": 0.01
                 }
               }
             ]
@@ -181,7 +187,7 @@
               {
                 "type": "wait",
                 "data": {
-                  "waitTime": 0.05
+                  "waitTime": 0.01
                 }
               }
             ]
@@ -201,31 +207,6 @@
                 "type": "named",
                 "data": {
                   "name": "WristUp"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "ShootHigh"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "race",
-          "data": {
-            "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "1"
-                }
-              },
-              {
-                "type": "wait",
-                "data": {
-                  "waitTime": 0.15
                 }
               }
             ]

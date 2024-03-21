@@ -77,30 +77,6 @@
                 "data": {
                   "pathName": "4pc 1"
                 }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "w"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "2"
-                }
-              },
-              {
-                "type": "wait",
-                "data": {
-                  "waitTime": 0.55
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "ShootLock"
-                }
               }
             ]
           }
@@ -118,7 +94,7 @@
               {
                 "type": "wait",
                 "data": {
-                  "waitTime": 0.2
+                  "waitTime": 0.01
                 }
               }
             ]
@@ -128,29 +104,11 @@
           "type": "race",
           "data": {
             "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "WristUp"
-                }
-              },
-              {
-                "type": "wait",
-                "data": {
-                  "waitTime": 1.2
-                }
-              },
               {
                 "type": "path",
                 "data": {
                   "pathName": "4pc 2"
                 }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "ShootHigh"
-                }
               }
             ]
           }
@@ -179,33 +137,9 @@
           "data": {
             "commands": [
               {
-                "type": "named",
-                "data": {
-                  "name": "w"
-                }
-              },
-              {
-                "type": "wait",
-                "data": {
-                  "waitTime": 1.5
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "2"
-                }
-              },
-              {
                 "type": "path",
                 "data": {
-                  "pathName": "4pc 3"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "ShootLock"
+                  "pathName": "4pc Disc 3"
                 }
               }
             ]
@@ -234,29 +168,11 @@
           "type": "race",
           "data": {
             "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "WristUp"
-                }
-              },
-              {
-                "type": "wait",
-                "data": {
-                  "waitTime": 1.6
-                }
-              },
               {
                 "type": "path",
                 "data": {
                   "pathName": "4pc 4"
                 }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "ShootHigh"
-                }
               }
             ]
           }
@@ -285,33 +201,9 @@
           "data": {
             "commands": [
               {
-                "type": "named",
-                "data": {
-                  "name": "w"
-                }
-              },
-              {
-                "type": "wait",
-                "data": {
-                  "waitTime": 1.6
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "2"
-                }
-              },
-              {
                 "type": "path",
                 "data": {
                   "pathName": "4pc 5"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "ShootLock"
                 }
               }
             ]
@@ -341,27 +233,9 @@
           "data": {
             "commands": [
               {
-                "type": "named",
-                "data": {
-                  "name": "WristUp"
-                }
-              },
-              {
-                "type": "wait",
-                "data": {
-                  "waitTime": 1.6
-                }
-              },
-              {
                 "type": "path",
                 "data": {
                   "pathName": "4pc 6"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "ShootHigh"
                 }
               }
             ]
@@ -381,56 +255,6 @@
                 "type": "wait",
                 "data": {
                   "waitTime": 0.3
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "race",
-          "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "4pc 7"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "w"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "2"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "ShootLock"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "race",
-          "data": {
-            "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "3"
-                }
-              },
-              {
-                "type": "wait",
-                "data": {
-                  "waitTime": 0.05
                 }
               }
             ]
@@ -456,12 +280,6 @@
                 "type": "named",
                 "data": {
                   "name": "ShootLock"
-                }
-              },
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "4pc 8"
                 }
               }
             ]

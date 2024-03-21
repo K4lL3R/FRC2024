@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 0.9626945359454185,
-        "y": 4.438407050851191
+        "x": 0.74,
+        "y": 4.38
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.6447195658848301,
-        "y": 2.774874943261875
+        "x": 1.2671762861357387,
+        "y": 2.6817815689839652
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 8.3,
-        "y": 0.5
+        "x": 8.67,
+        "y": 0.35
       },
       "prevControl": {
-        "x": 6.735739841860502,
-        "y": 0.3718319885158816
+        "x": 5.963486760268813,
+        "y": 0.44725266383485673
       },
       "nextControl": null,
       "isLocked": false,
@@ -33,7 +33,7 @@
   "eventMarkers": [
     {
       "name": "WristDown",
-      "waypointRelativePos": 0.6,
+      "waypointRelativePos": 0.5,
       "command": {
         "type": "parallel",
         "data": {
@@ -69,7 +69,7 @@
   "reversed": false,
   "folder": "Clear Auto Paths",
   "previewStartingState": {
-    "rotation": -60.0,
+    "rotation": -50.0,
     "velocity": 0
   },
   "useDefaultConstraints": true

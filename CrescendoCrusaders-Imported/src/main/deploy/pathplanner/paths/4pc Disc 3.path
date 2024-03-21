@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.58,
+        "x": 1.58,
         "y": 5.49
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.448910700160915,
-        "y": 5.5040931765173085
+        "x": 1.9346939692452838,
+        "y": 5.913972455619661
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 1.63,
-        "y": 5.49
+        "x": 2.65,
+        "y": 6.75
       },
       "prevControl": {
-        "x": 1.7975804250204488,
-        "y": 5.49
+        "x": 2.0283806616115356,
+        "y": 6.136478349989511
       },
       "nextControl": null,
       "isLocked": false,
@@ -32,7 +32,7 @@
   "constraintZones": [],
   "eventMarkers": [
     {
-      "name": "Shoot",
+      "name": "New Event Marker",
       "waypointRelativePos": 0,
       "command": {
         "type": "parallel",
@@ -41,13 +41,19 @@
             {
               "type": "named",
               "data": {
-                "name": "WristUp"
+                "name": "w"
               }
             },
             {
               "type": "named",
               "data": {
-                "name": "ShootHigh"
+                "name": "2"
+              }
+            },
+            {
+              "type": "named",
+              "data": {
+                "name": "ShootLock"
               }
             }
           ]
@@ -63,7 +69,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 1.0096162861525957,
+    "rotation": 43.0,
     "rotateFast": false
   },
   "reversed": false,

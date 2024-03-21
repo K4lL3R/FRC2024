@@ -3,24 +3,24 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.6,
-        "y": 6.7
+        "x": 2.65,
+        "y": 6.75
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.2991757194356044,
-        "y": 6.194502494169041
+        "x": 2.349175719435604,
+        "y": 6.244502494169041
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 1.58,
+        "x": 1.48,
         "y": 5.49
       },
       "prevControl": {
-        "x": 1.9112722961537219,
+        "x": 1.8112722961537218,
         "y": 5.785153253616065
       },
       "nextControl": null,
@@ -30,7 +30,31 @@
   ],
   "rotationTargets": [],
   "constraintZones": [],
-  "eventMarkers": [],
+  "eventMarkers": [
+    {
+      "name": "New Event Marker",
+      "waypointRelativePos": 0,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "WristUp"
+              }
+            },
+            {
+              "type": "named",
+              "data": {
+                "name": "ShootHigh"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
   "globalConstraints": {
     "maxVelocity": 5.39,
     "maxAcceleration": 3.0,
@@ -45,7 +69,7 @@
   "reversed": false,
   "folder": "4 Piece Front",
   "previewStartingState": {
-    "rotation": 57.99,
+    "rotation": 43.0,
     "velocity": 0
   },
   "useDefaultConstraints": true
