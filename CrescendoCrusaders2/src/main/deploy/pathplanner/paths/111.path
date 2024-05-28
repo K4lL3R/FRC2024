@@ -1,0 +1,144 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 8.25,
+        "y": 7.4
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 6.6451871465018435,
+        "y": 7.016495495141056
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 4.33,
+        "y": 6.38
+      },
+      "prevControl": {
+        "x": 5.1578819369210915,
+        "y": 6.82520949958394
+      },
+      "nextControl": {
+        "x": 3.8367937397065837,
+        "y": 6.114768808758504
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 8.25,
+        "y": 6.1
+      },
+      "prevControl": {
+        "x": 6.818062390953957,
+        "y": 7.106009286139795
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": null
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 1.15,
+      "rotationDegrees": 9.69,
+      "rotateFast": false
+    }
+  ],
+  "constraintZones": [],
+  "eventMarkers": [
+    {
+      "name": "WirstUp",
+      "waypointRelativePos": 0.1,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "3"
+              }
+            },
+            {
+              "type": "named",
+              "data": {
+                "name": "WristUp"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "New Event Marker",
+      "waypointRelativePos": 1.25,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "1"
+              }
+            },
+            {
+              "type": "wait",
+              "data": {
+                "waitTime": 0.15
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "New Event Marker",
+      "waypointRelativePos": 1.6,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "w"
+              }
+            },
+            {
+              "type": "named",
+              "data": {
+                "name": "2"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "globalConstraints": {
+    "maxVelocity": 5.39,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0
+  },
+  "goalEndState": {
+    "velocity": 1.78,
+    "rotation": -30.95999999999998,
+    "rotateFast": false
+  },
+  "reversed": false,
+  "folder": "973 paths",
+  "previewStartingState": {
+    "rotation": 0,
+    "velocity": 1.7
+  },
+  "useDefaultConstraints": true
+}

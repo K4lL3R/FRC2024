@@ -392,15 +392,9 @@
                 }
               },
               {
-                "type": "path",
-                "data": {
-                  "pathName": "4pc 6"
-                }
-              },
-              {
                 "type": "named",
                 "data": {
-                  "name": "ShootHigh"
+                  "name": "Track"
                 }
               }
             ]

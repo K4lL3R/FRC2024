@@ -18,13 +18,19 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "ShootHigh"
+                  "name": "Track"
                 }
               },
               {
                 "type": "wait",
                 "data": {
-                  "waitTime": 0.3
+                  "waitTime": 0.5
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Indexer"
                 }
               }
             ]
@@ -89,12 +95,6 @@
                 "data": {
                   "name": "2"
                 }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "ShootLock"
-                }
               }
             ]
           }
@@ -138,12 +138,6 @@
                 "type": "path",
                 "data": {
                   "pathName": "4pc 2"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "ShootHigh"
                 }
               }
             ]
@@ -193,13 +187,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "4pc Disc 3"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "ShootLock"
+                  "pathName": "4pc 3"
                 }
               }
             ]
@@ -244,12 +232,6 @@
                 "type": "path",
                 "data": {
                   "pathName": "4pc 4"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "ShootHigh"
                 }
               }
             ]
@@ -301,12 +283,6 @@
                 "data": {
                   "pathName": "4pc 5"
                 }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "ShootLock"
-                }
               }
             ]
           }
@@ -350,12 +326,6 @@
                 "type": "path",
                 "data": {
                   "pathName": "4pc 6"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "ShootHigh"
                 }
               }
             ]

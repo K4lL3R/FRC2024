@@ -1,0 +1,149 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 8.24,
+        "y": 7.35
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 8.183234878470348,
+        "y": 7.330564954908109
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 4.69,
+        "y": 6.28
+      },
+      "prevControl": {
+        "x": 4.0768973101504296,
+        "y": 6.135068665571516
+      },
+      "nextControl": {
+        "x": 5.546397408043843,
+        "y": 6.482443768725512
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 8.3,
+        "y": 5.9
+      },
+      "prevControl": {
+        "x": 7.060663174256827,
+        "y": 6.409552973062501
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": null
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.95,
+      "rotationDegrees": 9.44,
+      "rotateFast": false
+    },
+    {
+      "waypointRelativePos": 1.3,
+      "rotationDegrees": 0,
+      "rotateFast": false
+    }
+  ],
+  "constraintZones": [],
+  "eventMarkers": [
+    {
+      "name": "wrist up",
+      "waypointRelativePos": 0.05,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "WristUp"
+              }
+            },
+            {
+              "type": "named",
+              "data": {
+                "name": "3"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "shoot 3",
+      "waypointRelativePos": 1.0,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "1"
+              }
+            },
+            {
+              "type": "wait",
+              "data": {
+                "waitTime": 0.5
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "intake 4",
+      "waypointRelativePos": 1.65,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "w"
+              }
+            },
+            {
+              "type": "named",
+              "data": {
+                "name": "2"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "globalConstraints": {
+    "maxVelocity": 5.39,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0
+  },
+  "goalEndState": {
+    "velocity": 1.7,
+    "rotation": -25.579999999999984,
+    "rotateFast": false
+  },
+  "reversed": false,
+  "folder": "New 6",
+  "previewStartingState": {
+    "rotation": 0.0,
+    "velocity": 2.0
+  },
+  "useDefaultConstraints": true
+}

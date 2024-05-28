@@ -1,0 +1,121 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 3.53,
+        "y": 5.54
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 5.396361916425438,
+        "y": 7.228446713739509
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 8.301494525557512,
+        "y": 7.392446135222771
+      },
+      "prevControl": {
+        "x": 8.262447044251974,
+        "y": 7.384636638961664
+      },
+      "nextControl": {
+        "x": 8.319410673790797,
+        "y": 7.396029364869428
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 4.5,
+        "y": 6.35
+      },
+      "prevControl": {
+        "x": 6.028931113575164,
+        "y": 7.400255631483879
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": null
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "eventMarkers": [
+    {
+      "name": "Wrist Up",
+      "waypointRelativePos": 1.35,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "WristUp"
+              }
+            },
+            {
+              "type": "named",
+              "data": {
+                "name": "3"
+              }
+            },
+            {
+              "type": "wait",
+              "data": {
+                "waitTime": 0.01
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Intake 4",
+      "waypointRelativePos": 0.5,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "w"
+              }
+            },
+            {
+              "type": "named",
+              "data": {
+                "name": "2"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "globalConstraints": {
+    "maxVelocity": 5.39,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 14.0,
+    "rotateFast": false
+  },
+  "reversed": false,
+  "folder": "New 6",
+  "previewStartingState": {
+    "rotation": 0,
+    "velocity": 0
+  },
+  "useDefaultConstraints": true
+}

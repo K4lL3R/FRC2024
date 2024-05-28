@@ -47,11 +47,11 @@ public final class Constants {
             public static final int encoderPort = 0;
             public static final IdleMode idleMode = IdleMode.kBrake;
 
-            public static final double shooterSetPoint = -7;
-            public static final double climbLock = -2;//3.8
+            public static final double shooterSetPoint = -8;
+            public static final double climbLock = 0;//3.8
             public static final double downSetPoint = -55.7;//-58 -21 -23.5
-            public static final double farShots = -21.4;//-21
-            public static final double autoFar = -20;
+            public static final double farShots = -27.3;//-21
+            public static final double autoFar = -17.8;
 
             public enum ShooterMode {
                 ClimbLock,
@@ -70,7 +70,7 @@ public final class Constants {
             public static final IdleMode idleMode = IdleMode.kBrake;
 
             public static final double feedSetPoint = 0;
-            public static final double stowSetPoint = -1.85;
+            public static final double stowSetPoint = -1.67;
             public static final double scoreSetPoint = -28;
 
             public enum ArmMode {
@@ -85,9 +85,9 @@ public final class Constants {
             public static final int encoderPort = 2;
             public static final IdleMode idleMode = IdleMode.kBrake;
 
-            public static final double intakeSetPoint = -28.9;//wasa 28.15
-            public static final double stowSetPoint = -4.1;
-            public static final double feedSetPoint = -0.1;
+            public static final double intakeSetPoint = -29;//wasa 28.15
+            public static final double stowSetPoint = -4.47;
+            public static final double feedSetPoint = 0;
 
             public enum IntakeMode {
                 Down,

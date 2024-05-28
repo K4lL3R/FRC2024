@@ -1,0 +1,153 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 3.8891291380362945,
+        "y": 5.939879830659022
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 6.731785777079506,
+        "y": 6.595877516592071
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 8.24,
+        "y": 5.67
+      },
+      "prevControl": {
+        "x": 7.301879004135723,
+        "y": 5.47131005499027
+      },
+      "nextControl": {
+        "x": 8.75335342318711,
+        "y": 5.778726021348274
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 4.716935741713714,
+        "y": 6.494354065197672
+      },
+      "prevControl": {
+        "x": 6.3786282917277095,
+        "y": 6.904231003270717
+      },
+      "nextControl": {
+        "x": 3.0552431916997183,
+        "y": 6.084477127124626
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 8.24,
+        "y": 7.611112030538198
+      },
+      "prevControl": {
+        "x": 6.967052109439442,
+        "y": 7.493969586621582
+      },
+      "nextControl": {
+        "x": 9.296653025403504,
+        "y": 7.708350039010913
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 3.8891291380362945,
+        "y": 6.2522596811033315
+      },
+      "prevControl": {
+        "x": 4.8418876818867895,
+        "y": 6.549020539023136
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": null
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.95,
+      "rotationDegrees": 0,
+      "rotateFast": true
+    }
+  ],
+  "constraintZones": [],
+  "eventMarkers": [
+    {
+      "name": "Wrist Up",
+      "waypointRelativePos": 1.55,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "WristUp"
+              }
+            },
+            {
+              "type": "named",
+              "data": {
+                "name": "3"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Intake 4",
+      "waypointRelativePos": 0.2,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "w"
+              }
+            },
+            {
+              "type": "named",
+              "data": {
+                "name": "2"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "globalConstraints": {
+    "maxVelocity": 5.39,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 10.0,
+    "rotateFast": true
+  },
+  "reversed": false,
+  "folder": "New 6",
+  "previewStartingState": {
+    "rotation": 10.0,
+    "velocity": 0
+  },
+  "useDefaultConstraints": true
+}

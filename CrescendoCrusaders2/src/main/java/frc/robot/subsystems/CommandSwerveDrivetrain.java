@@ -18,12 +18,21 @@ import com.pathplanner.lib.util.ReplanningConfig;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.*;
+import edu.wpi.first.math.VecBuilder;
+import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
+import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.math.util.Units;
+import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.networktables.StructArrayPublisher;
+import edu.wpi.first.networktables.StructPublisher;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Notifier;
 import edu.wpi.first.wpilibj.RobotController;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import frc.lib.*;
@@ -38,6 +47,14 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
     private double m_lastSimTime;
     public Pigeon2 gyro;
     public FieldCentricFacingAngle fieldCentricAngle = new FieldCentricFacingAngle();
+    Pose2d poseA;
+    Pose2d poseB;
+    StructPublisher<Pose2d> publisher;
+    StructPublisher<Pose2d> publisher2;
+    StructArrayPublisher<SwerveModuleState> publisher3;
+    SwerveDrivePoseEstimator poseEstimator;
+    // LimelightHelpers.PoseEstimate llPoseEstimate;
+
 
     // Creates a SysIdRoutine
     // private SwerveVoltageRequest driveRequest = new SwerveVoltageRequest(true);
@@ -51,17 +68,25 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
 
     public final SwerveRequest.ApplyChassisSpeeds autoRequest = new SwerveRequest.ApplyChassisSpeeds();
 
-    public CommandSwerveDrivetrain(SwerveDrivetrainConstants driveTrainConstants, double OdometryUpdateFrequency, SwerveModuleConstants... modules) {
-        super(driveTrainConstants, OdometryUpdateFrequency, modules);
-        if (Utils.isSimulation()) {
-            startSimThread();
-        }
-    }
     public CommandSwerveDrivetrain(SwerveDrivetrainConstants driveTrainConstants, SwerveModuleConstants... modules) {
         super(driveTrainConstants, modules);
         if (Utils.isSimulation()) {
             startSimThread();
         }
+        publisher = NetworkTableInstance.getDefault()
+            .getStructTopic("MyPose", Pose2d.struct).publish();
+        publisher2 = NetworkTableInstance.getDefault()
+            .getStructTopic("MyPoseAAA", Pose2d.struct).publish();
+        publisher3 = NetworkTableInstance.getDefault()
+            .getStructArrayTopic("Swerve", SwerveModuleState.struct).publish();
+        this.seedFieldRelative(new Pose2d(1.58, 5.49, Rotation2d.fromDegrees(0)));
+        LimelightHelpers.setCameraPose_RobotSpace("limelight", 10.5, 0, 6, 0, 40, 0);
+        poseEstimator = new SwerveDrivePoseEstimator(
+        m_kinematics, this.getPigeon2().getRotation2d(), m_modulePositions, this.getState().Pose, 
+        VecBuilder.fill(0.05, 0.05, Units.degreesToRadians(5)), 
+        VecBuilder.fill(0.5, 0.5, Units.degreesToRadians(30)));
+
+        // llPoseEstimate = LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2("limelight");
     }
 
     public double getDriveBaseRadius() {
@@ -154,6 +179,12 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
 
     @Override
     public void periodic() {
+        updateOdometry();
+        poseB = new Pose2d(poseEstimator.getEstimatedPosition().getTranslation(), poseEstimator.getEstimatedPosition().getRotation());
+        poseA = new Pose2d(this.getState().Pose.getTranslation(), this.getState().Pose.getRotation());
+        
+        // SwerveDrivePoseEstimator estimator = new SwerveDrivePoseEstimator(m_kinematics, this.getPigeon2().getRotation2d(), m_modulePositions, poseB)
+        // addVisionMeasurement(poseB, );
         for (int i = 0; i < 4; i++) {
             SmartDashboard.putNumber("DriveTempModule" + i + ": ", (RobotContainer.drivetrain.getModule(i).getDriveMotor().getDeviceTemp().getValue()) * (1.8) + 32);
             SmartDashboard.putNumber("AngleTempModule" + i + ": ", (RobotContainer.drivetrain.getModule(i).getSteerMotor().getDeviceTemp().getValue()) * (1.8) + 32);
@@ -168,6 +199,12 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
 
         // SmartDashboard.putString("Command", this.getCurrentCommand().toString());
         SmartDashboard.putNumber("X", RobotContainer.controller.getX());
+        // WPILib
+        publisher3.set(this.getState().ModuleStates);
+        publisher2.set(poseA);
+        publisher.set(poseB);
+        // SmartDashboard.putNumber("Apriltags", llPoseEstimate.tagCount);
+        SmartDashboard.putNumber("GyroRate", this.getPigeon2().getRate());
     }
 
     // public Command runDriveQuasiTest(SysIdRoutine.Direction direction)
@@ -236,7 +273,7 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
         // if it is too high, the robot will oscillate.
         // if it is too low, the robot will never reach its target
         // if the robot never turns in the correct direction, kP should be inverted.
-            double kP = .02;
+            double kP = .01;
     
             // tx ranges from (-hfov/2) to (hfov/2) in degrees. If your target is on the rightmost edge of 
             // your limelight 3 feed, tx should return roughly 31 degrees.
@@ -257,6 +294,21 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
             targetingForwardSpeed *= RobotContainer.MaxSpeed;
             targetingForwardSpeed *= -1.0;
             return targetingForwardSpeed;
+        }
+
+        public void updateOdometry() {
+            LimelightHelpers.Results results = LimelightHelpers.getLatestResults("limelight").targetingResults;
+            poseEstimator.update(this.getPigeon2().getRotation2d(), m_modulePositions);
+            LimelightHelpers.SetRobotOrientation("limelight", poseEstimator.getEstimatedPosition().getRotation().getDegrees(), 0, 0, 0, 0, 0);
+            LimelightHelpers.PoseEstimate llPoseEstimate = LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2("limelight");
+               if (llPoseEstimate.tagCount > 0 || Math.abs(this.getPigeon2().getRate()) <= 720) {
+                    poseEstimator.setVisionMeasurementStdDevs(VecBuilder.fill(0.7, 0.7, 99999));
+                    poseEstimator.addVisionMeasurement(llPoseEstimate.pose, Timer.getFPGATimestamp() - ((results.latency_pipeline / 1000) - (results.latency_capture / 1000)));
+                    // System.out.print("hi");
+               }
+            SmartDashboard.putNumber("Apriltag", llPoseEstimate.tagCount);
+            SmartDashboard.putNumber("Rate", this.getPigeon2().getRate());
+            //    System.out.print("hey");
         }
 
 }

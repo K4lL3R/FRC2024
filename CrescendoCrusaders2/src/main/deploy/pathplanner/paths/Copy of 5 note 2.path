@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 8.02,
-        "y": 7.2
+        "x": 8.34,
+        "y": 7.54
       },
       "prevControl": null,
       "nextControl": {
-        "x": 5.436234096433956,
-        "y": 6.486887667641241
+        "x": 5.756234096433956,
+        "y": 6.826887667641241
       },
       "isLocked": false,
       "linkedName": null
@@ -41,13 +41,13 @@
             {
               "type": "named",
               "data": {
-                "name": "WristUp"
+                "name": "Track"
               }
             },
             {
               "type": "named",
               "data": {
-                "name": "ShootFar"
+                "name": "WristUp"
               }
             }
           ]

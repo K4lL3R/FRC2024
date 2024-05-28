@@ -1,0 +1,70 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 8.38,
+        "y": 2.61
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 5.776265796780886,
+        "y": 1.989465804791855
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 3.2,
+        "y": 2.74
+      },
+      "prevControl": {
+        "x": 4.631031282836881,
+        "y": 1.7930373160085316
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": null
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "eventMarkers": [
+    {
+      "name": "New Event Marker",
+      "waypointRelativePos": 0,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "Track"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "globalConstraints": {
+    "maxVelocity": 5.39,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0
+  },
+  "goalEndState": {
+    "velocity": 0.0,
+    "rotation": -42.69999999999999,
+    "rotateFast": false
+  },
+  "reversed": false,
+  "folder": "Clear Track",
+  "previewStartingState": {
+    "rotation": 42.5,
+    "velocity": 0
+  },
+  "useDefaultConstraints": true
+}

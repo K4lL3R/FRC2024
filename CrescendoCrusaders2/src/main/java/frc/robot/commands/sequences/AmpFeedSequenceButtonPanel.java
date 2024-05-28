@@ -32,8 +32,8 @@ public class AmpFeedSequenceButtonPanel extends SequentialCommandGroup {
                         new WaitCommand(0.5)
                     ),
                     new ParallelCommandGroup(
-                        new RunArmOuttake(RobotContainer.s_Arm, power),
-                        new RunWristIntake(RobotContainer.s_WristIntake, power)
+                        new RunArmOuttake(RobotContainer.s_Arm, power * 1.7),
+                        new RunWristIntake(RobotContainer.s_WristIntake, power * 1.6)
                     )
                 )
             );

@@ -51,6 +51,12 @@
                 "data": {
                   "waitTime": 0.25
                 }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Indexer"
+                }
               }
             ]
           }
@@ -63,6 +69,12 @@
                 "type": "path",
                 "data": {
                   "pathName": "4pc 1"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Track"
                 }
               },
               {
@@ -110,15 +122,9 @@
                 }
               },
               {
-                "type": "named",
-                "data": {
-                  "name": "ShootFar"
-                }
-              },
-              {
                 "type": "wait",
                 "data": {
-                  "waitTime": 0.6
+                  "waitTime": 0.4
                 }
               }
             ]
@@ -228,12 +234,6 @@
                 "data": {
                   "pathName": "4pc 3"
                 }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "ShootLock"
-                }
               }
             ]
           }
@@ -322,12 +322,6 @@
                 "data": {
                   "pathName": "4pc 5"
                 }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "ShootLock"
-                }
               }
             ]
           }
@@ -358,19 +352,32 @@
               {
                 "type": "named",
                 "data": {
+                  "name": "Track"
+                }
+              },
+              {
+                "type": "wait",
+                "data": {
+                  "waitTime": 0.25
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "race",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
                   "name": "WristUp"
                 }
               },
               {
-                "type": "path",
+                "type": "wait",
                 "data": {
-                  "pathName": "4pc 6"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "ShootFar"
+                  "waitTime": 0.4
                 }
               }
             ]
@@ -389,7 +396,7 @@
               {
                 "type": "wait",
                 "data": {
-                  "waitTime": 0.3
+                  "waitTime": 0.2
                 }
               }
             ]

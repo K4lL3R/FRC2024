@@ -17,11 +17,11 @@
     {
       "anchor": {
         "x": 8.67,
-        "y": 0.35
+        "y": 0.58
       },
       "prevControl": {
         "x": 5.963486760268813,
-        "y": 0.44725266383485673
+        "y": 0.6772526638348567
       },
       "nextControl": null,
       "isLocked": false,
@@ -69,7 +69,7 @@
   "reversed": false,
   "folder": "Clear Auto Paths",
   "previewStartingState": {
-    "rotation": -50.0,
+    "rotation": -52.0,
     "velocity": 0
   },
   "useDefaultConstraints": true
