@@ -3,13 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.58,
-        "y": 5.49
+        "x": 1.8,
+        "y": 5.492382339971527
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.448910700160915,
-        "y": 5.5040931765173085
+        "x": 2.116192586736101,
+        "y": 5.4806715034257465
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 2.58,
+        "y": 5.49
+      },
+      "prevControl": {
+        "x": 2.277291458106917,
+        "y": 5.47828916345422
+      },
+      "nextControl": {
+        "x": 2.8827085418930833,
+        "y": 5.50171083654578
       },
       "isLocked": false,
       "linkedName": null
@@ -20,8 +36,8 @@
         "y": 5.49
       },
       "prevControl": {
-        "x": 1.9675804250204487,
-        "y": 5.49
+        "x": 2.0851355017157625,
+        "y": 5.0964542344570996
       },
       "nextControl": null,
       "isLocked": false,
@@ -32,10 +48,33 @@
   "constraintZones": [],
   "eventMarkers": [
     {
-      "name": "New Event Marker",
-      "waypointRelativePos": 0.15,
+      "name": "Wrist Down",
+      "waypointRelativePos": 0.2,
       "command": {
         "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "w"
+              }
+            },
+            {
+              "type": "named",
+              "data": {
+                "name": "2"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Wrist UP",
+      "waypointRelativePos": 1.65,
+      "command": {
+        "type": "race",
         "data": {
           "commands": [
             {
@@ -48,6 +87,12 @@
               "type": "named",
               "data": {
                 "name": "3"
+              }
+            },
+            {
+              "type": "wait",
+              "data": {
+                "waitTime": 0.1
               }
             }
           ]

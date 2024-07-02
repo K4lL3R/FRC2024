@@ -15,12 +15,14 @@ import frc.robot.subsystems.Wrists.*;
 
 import com.ctre.phoenix6.mechanisms.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveRequest.FieldCentricFacingAngle;
+import com.ctre.phoenix6.mechanisms.swerve.utility.PhoenixPIDController;
 import com.ctre.phoenix6.configs.CurrentLimitsConfigs;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveRequest;
 
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -44,6 +46,26 @@ public class RobotContainer {
   public static final CommandJoystick controller = new CommandJoystick(0);
   public static final CommandJoystick buttons = new CommandJoystick(1);
 
+  public enum ScoringMode {
+    Shoot,
+    Amp
+  }
+
+  private ScoringMode currentMode;
+  private String mode;
+
+  private void setMode(ScoringMode mode) {
+    currentMode = mode;
+    this.mode = currentMode.toString();
+    System.out.println(this.mode);
+  } 
+
+  private ScoringMode getCurrentMode() {
+    return currentMode;
+  }
+
+
+
   //swerve + current
   public static final CommandSwerveDrivetrain drivetrain = TunerConstants.DriveTrain; // My drivetrain
   private static final CurrentLimitsConfigs currentConfigs = new CurrentLimitsConfigs()
@@ -62,6 +84,8 @@ public class RobotContainer {
       .withDeadband(MaxSpeed * 0.05).withRotationalDeadband(MaxAngularRate * 0.03) // Add a 10% deadband
       .withDriveRequestType(DriveRequestType.OpenLoopVoltage);
 
+
+
   //subsystems
   public static final Shooter s_ShooterOuttake = new Shooter();
   public static final Climb s_Climb = new Climb();
@@ -71,6 +95,8 @@ public class RobotContainer {
   public static final wristShooter s_WristShooter = new wristShooter();
   public static final Wrist s_Wrist = new Wrist();
   public static final LEDs s_LEDs = new LEDs();
+
+
 
   // public static final Telemetry telemetry = new Telemetry(RobotContainer.MaxSpeed);
 
@@ -148,7 +174,7 @@ public class RobotContainer {
     // Configure the trigger bindings
     NamedCommands.registerCommand("w", new IntakeWristPos(s_Wrist, Constants.Wrists.Intake.IntakeMode.Down));
     NamedCommands.registerCommand("WristUp", new IntakeWristPos(s_Wrist, Constants.Wrists.Intake.IntakeMode.Feed));
-    NamedCommands.registerCommand("SpinShooter", new RunShooter(s_ShooterOuttake, -1, 0.7));
+    NamedCommands.registerCommand("SpinShooter", new RunShooter(s_ShooterOuttake, 1, 0.7));
     NamedCommands.registerCommand("StopShooter", new RunShooter(s_ShooterOuttake, 0, 0));
     NamedCommands.registerCommand("1", new RunWristIntake(s_WristIntake, 0.5));
     NamedCommands.registerCommand("2", new RunWristIntake(s_WristIntake, -0.5));
@@ -185,6 +211,7 @@ public class RobotContainer {
         ));
     configureBindings();
     SmartDashboard.putData("Auto", m_chooser);
+    // SmartDashboard.putString("Mode", mode);
     drivetrain.getModule(0).getDriveMotor().getConfigurator().apply(currentConfigs);
     drivetrain.getModule(0).getSteerMotor().getConfigurator().apply(currentConfigs);
     drivetrain.getModule(1).getDriveMotor().getConfigurator().apply(currentConfigs);
@@ -214,7 +241,7 @@ public class RobotContainer {
     Trigger armBeamBreak = new Trigger(() -> s_Arm.getIsBeamBrakeBroken());
     Trigger wristBeamBreak = new Trigger(() -> s_WristIntake.getIsBeamBrakeBroken());
     // Trigger aprilTagDetected = new Trigger(() -> LimelightHelpers.getFiducialID("limelight") == 4 || LimelightHelpers.getFiducialID("limelight") == 7);
-    Trigger limelightTX = new Trigger(() -> Math.abs(LimelightHelpers.getTX("limelight")) < 6);
+    Trigger limelightTX = new Trigger(() -> Math.abs(LimelightHelpers.getTY("limelight")) < 6);
     wristBeamBreak.whileTrue(new ChangeAnimation(s_LEDs, 1)).onFalse(new ChangeAnimation(s_LEDs, 0));
     armBeamBreak.whileTrue(new ChangeAnimation(s_LEDs, 4)).onFalse(new ChangeAnimation(s_LEDs, 0));
     buttons.button(1).onTrue(shootWristDown);
@@ -226,16 +253,28 @@ public class RobotContainer {
     buttons.button(7).onTrue(sequence3Score);
     controller.button(7).onTrue(spinShot).onFalse(stopShot);
     // buttons.button(11).and(limelightTX).onTrue(spinShot.alongWith(outtakeDisc)).onFalse(stopShooter.alongWith(stopWristIntake));
-    buttons.button(9).onTrue(armScore);
-    buttons.button(10).onTrue(sequence3AfterAmp);
-    buttons.button(8).and(armBeamBreak.negate()).onTrue(new ChangeAnimation(s_LEDs, 5).alongWith(new AmpFeedSequenceButtonPanel(0.5))).onFalse(new AmpFeedSequenceButtonPanel(0));
+    buttons.button(9).and(armBeamBreak.negate()).onTrue(new ChangeAnimation(s_LEDs, 5).alongWith(new AmpFeedSequenceButtonPanel(0.5))).onFalse(new ArmOut());
+    // buttons.button(10).onTrue(sequence3AfterAmp);
+    buttons.button(8).and(armBeamBreak.negate()).onTrue(new ChangeAnimation(s_LEDs, 5).alongWith(new AmpFeedSequenceButtonPanel(0.5))).onFalse(new AmpSequence(Constants.Climb.Position.Amp, Constants.Wrists.Arm.ArmMode.Score));
     buttons.button(2).onTrue(shootFromFar);
 
     // controller.button(7).onTrue(outtakeDisc.alongWith(new RunShooterIndex(s_ShooterOuttake, 0.7))).onFalse(stopWristIntake.alongWith(new RunShooterIndex(s_ShooterOuttake, 0.1)));
-    controller.button(8).whileTrue(sequence2).onFalse(stopSequence2);
-    controller.button(5).onTrue(intakeArm).onFalse(stopArm);
-    controller.button(6).onTrue(outtakeArm).onFalse(stopArm);
+    controller.button(8).whileTrue(sequence2.alongWith(new ShooterWithLedsNoSwerve(false, 0))).onFalse(stopSequence2);
+    controller.button(5).onTrue(intakeArm).onFalse(sequence3AfterAmp);
+    controller.pov(0).onTrue(outtakeArm).onFalse(stopArm);
     controller.button(1).onTrue(tareSwerve);
+    controller.button(2).and(wristBeamBreak.negate()).onTrue(new ChangeAnimation(s_LEDs, 5).alongWith(new AmpFeedSequenceButtonPanel(-0.3))).onFalse(new AmpFeedSequenceButtonPanel(0));
+    controller.pov(180).onTrue(intakeArm).onFalse(stopArm);
+    controller.button(6).onTrue(outtakeDisc).onFalse(stopWristIntake);
+    // controller.pov(90).onTrue(drivetrain.applyRequest(() -> DriverStation.getAlliance().get() == Alliance.Blue ? 
+    //   FIELD_CENTRIC_FACING_ANGLE
+    //     .withVelocityX(-MathUtil.applyDeadband(controller.getY(), 0.1) * RobotContainer.MaxSpeed)
+    //     .withVelocityY(-MathUtil.applyDeadband(controller.getX(), 0.1) * RobotContainer.MaxSpeed) : 
+    //   FIELD_CENTRIC_FACING_ANGLE_RED
+    //     .withVelocityX(-MathUtil.applyDeadband(controller.getY(), 0.1) * RobotContainer.MaxSpeed)
+    //     .withVelocityY(-MathUtil.applyDeadband(controller.getX(), 0.1) * RobotContainer.MaxSpeed)));
+    // controller.pov(270).onTrue(drivetrain.getDefaultCommand());
+
     // controller.button(2).and(llTXMinus).whileTrue(drivetrain.applyRequest(() -> driveRobotCentric.withRotationalRate(0.1 * MaxAngularRate))).onFalse(drivetrain.getDefaultCommand());
     // controller.button(3).and(llTXPlus).whileTrue(drivetrain.applyRequest(() -> driveRobotCentric.withRotationalRate(-0.1 * MaxAngularRate))).onFalse(drivetrain.getDefaultCommand());
     // controller.button(3).and(armBeamBreak.negate()).whileTrue(feeding);
@@ -249,6 +288,34 @@ public class RobotContainer {
 
     // controller.pov(0).onTrue(drivetrain.applyRequest(() -> new SwerveRequest.FieldCentricFacingAngle().withTargetDirection(Rotation2d.fromDegrees(90))));
   }
+
+  private void configNewBindings() {
+    buttons.button(1).onTrue(Commands.runOnce(() -> setMode(ScoringMode.Amp)));
+    buttons.button(2).onTrue(Commands.runOnce(() -> setMode(ScoringMode.Shoot)));
+    controller.button(5).onTrue(intakeArm).onFalse(stopArm);
+    controller.button(6).onTrue(outtakeArm).onFalse(stopArm);
+    if (currentMode == ScoringMode.Amp) {
+      controller.button(7).onTrue(sequence3Score);
+      controller.button(8).onTrue(sequence3AfterAmp);
+    } else if (currentMode == ScoringMode.Shoot) {
+      controller.button(7).onTrue(spinShot).onFalse(stopShot);
+      controller.button(8).whileTrue(sequence2).onFalse(stopSequence2);
+      controller.button(1).onTrue(tareSwerve);
+      // controller.button(2).and(llTXMinus).whileTrue(drivetrain.applyRequest(() -> driveRobotCentric.withRotationalRate(0.1 * MaxAngularRate))).onFalse(drivetrain.getDefaultCommand());
+      // controller.button(3).and(llTXPlus).whileTrue(drivetrain.applyRequest(() -> driveRobotCentric.withRotationalRate(-0.1 * MaxAngularRate))).onFalse(drivetrain.getDefaultCommand());
+      // controller.button(3).and(armBeamBreak.negate()).whileTrue(feeding);
+      controller.button(3).whileTrue(        
+
+          drivetrain.applyRequest(() -> driveRobotCentric.withVelocityX(-MathUtil.applyDeadband(controller.getY(), 0.1) * RobotContainer.MaxSpeed) // Drive forward with
+                                                                                         // negative Y (forward)
+          .withVelocityY(-MathUtil.applyDeadband(controller.getX(), 0.1) * RobotContainer.MaxSpeed) // Drive left with negative X (left)
+          .withRotationalRate(-MathUtil.applyDeadband(controller.getZ(), 0.1) * RobotContainer.MaxAngularRate)))
+      .onFalse(drivetrain.getDefaultCommand());
+    }
+  }
+
+
+
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
    *

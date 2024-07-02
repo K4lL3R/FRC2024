@@ -20,24 +20,24 @@
         "y": 6.38
       },
       "prevControl": {
-        "x": 5.1578819369210915,
-        "y": 6.82520949958394
+        "x": 4.506079342659158,
+        "y": 7.08787578103957
       },
       "nextControl": {
-        "x": 3.8367937397065837,
-        "y": 6.114768808758504
+        "x": 4.173425782956914,
+        "y": 5.750538903052468
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 8.25,
-        "y": 6.1
+        "x": 8.15,
+        "y": 5.7
       },
       "prevControl": {
-        "x": 6.818062390953957,
-        "y": 7.106009286139795
+        "x": 6.36943485246744,
+        "y": 6.410664159760803
       },
       "nextControl": null,
       "isLocked": false,
@@ -47,7 +47,7 @@
   "rotationTargets": [
     {
       "waypointRelativePos": 1.15,
-      "rotationDegrees": 9.69,
+      "rotationDegrees": 8.0,
       "rotateFast": false
     }
   ],
@@ -77,8 +77,8 @@
       }
     },
     {
-      "name": "New Event Marker",
-      "waypointRelativePos": 1.25,
+      "name": "Shoot",
+      "waypointRelativePos": 0.85,
       "command": {
         "type": "parallel",
         "data": {
@@ -131,14 +131,14 @@
   },
   "goalEndState": {
     "velocity": 1.78,
-    "rotation": -30.95999999999998,
+    "rotation": -16.273387901873434,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "973 paths",
+  "folder": "973",
   "previewStartingState": {
     "rotation": 0,
-    "velocity": 1.7
+    "velocity": 5.0
   },
   "useDefaultConstraints": true
 }

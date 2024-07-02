@@ -3,25 +3,41 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 8.25,
-        "y": 7.4
+        "x": 1.8,
+        "y": 5.49
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.649034116058536,
-        "y": 7.017414811154653
+        "x": 2.014850035365793,
+        "y": 6.252259681101044
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 4.334270424914787,
-        "y": 6.377211621278767
+        "x": 2.5693242699044414,
+        "y": 7.0253998109507085
       },
       "prevControl": {
-        "x": 5.958645647225189,
-        "y": 6.78330542685637
+        "x": 1.9695088776348255,
+        "y": 7.182728438431265
+      },
+      "nextControl": {
+        "x": 3.0457035418320126,
+        "y": 6.900447870772984
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 1.8,
+        "y": 5.49
+      },
+      "prevControl": {
+        "x": 2.4287533372045025,
+        "y": 5.8930228530900886
       },
       "nextControl": null,
       "isLocked": false,
@@ -33,7 +49,7 @@
   "eventMarkers": [
     {
       "name": "Wrist Up",
-      "waypointRelativePos": 0.1,
+      "waypointRelativePos": 0.3,
       "command": {
         "type": "parallel",
         "data": {
@@ -41,19 +57,13 @@
             {
               "type": "named",
               "data": {
-                "name": "3"
+                "name": "w"
               }
             },
             {
               "type": "named",
               "data": {
-                "name": "WristUp"
-              }
-            },
-            {
-              "type": "named",
-              "data": {
-                "name": "Track"
+                "name": "2"
               }
             }
           ]
@@ -69,14 +79,14 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 9.69,
-    "rotateFast": true
+    "rotation": 0,
+    "rotateFast": false
   },
   "reversed": false,
-  "folder": "973",
+  "folder": "4 Piece Front",
   "previewStartingState": {
     "rotation": 0,
-    "velocity": 1.7
+    "velocity": 0
   },
   "useDefaultConstraints": true
 }

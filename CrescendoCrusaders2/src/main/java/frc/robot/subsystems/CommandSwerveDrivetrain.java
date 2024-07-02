@@ -52,7 +52,8 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
     StructPublisher<Pose2d> publisher;
     StructPublisher<Pose2d> publisher2;
     StructArrayPublisher<SwerveModuleState> publisher3;
-    SwerveDrivePoseEstimator poseEstimator;
+    private final SwerveDrivePoseEstimator poseEstimator = new SwerveDrivePoseEstimator(
+            m_kinematics, this.getPigeon2().getRotation2d(), m_modulePositions, new Pose2d());
     // LimelightHelpers.PoseEstimate llPoseEstimate;
 
 
@@ -80,11 +81,7 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
         publisher3 = NetworkTableInstance.getDefault()
             .getStructArrayTopic("Swerve", SwerveModuleState.struct).publish();
         this.seedFieldRelative(new Pose2d(1.58, 5.49, Rotation2d.fromDegrees(0)));
-        LimelightHelpers.setCameraPose_RobotSpace("limelight", 10.5, 0, 6, 0, 40, 0);
-        poseEstimator = new SwerveDrivePoseEstimator(
-        m_kinematics, this.getPigeon2().getRotation2d(), m_modulePositions, this.getState().Pose, 
-        VecBuilder.fill(0.05, 0.05, Units.degreesToRadians(5)), 
-        VecBuilder.fill(0.5, 0.5, Units.degreesToRadians(30)));
+        LimelightHelpers.setCameraPose_RobotSpace("limelight", 0.3, 0, 0.1, 0, 40, 0);
 
         // llPoseEstimate = LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2("limelight");
     }
@@ -190,21 +187,15 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
             SmartDashboard.putNumber("AngleTempModule" + i + ": ", (RobotContainer.drivetrain.getModule(i).getSteerMotor().getDeviceTemp().getValue()) * (1.8) + 32);
 
         }
-            SmartDashboard.putNumber("PoseX", this.getState().Pose.getX());
-            SmartDashboard.putNumber("PoseY", this.getState().Pose.getY());
-            SmartDashboard.putNumber("PoseRotation", this.getState().Pose.getRotation().getDegrees());
-
-            SmartDashboard.putNumber("Gyro", this.getPigeon2().getYaw().getValueAsDouble());
-            SmartDashboard.putNumber("GyroAngle", this.getPigeon2().getAngle());
+        SmartDashboard.putNumber("Rotation", this.getPigeon2().getRotation2d().getDegrees());
 
         // SmartDashboard.putString("Command", this.getCurrentCommand().toString());
-        SmartDashboard.putNumber("X", RobotContainer.controller.getX());
+        // SmartDashboard.putNumber("X", RobotContainer.controller.getX());
         // WPILib
-        publisher3.set(this.getState().ModuleStates);
         publisher2.set(poseA);
         publisher.set(poseB);
         // SmartDashboard.putNumber("Apriltags", llPoseEstimate.tagCount);
-        SmartDashboard.putNumber("GyroRate", this.getPigeon2().getRate());
+        // SmartDashboard.putNumber("GyroRate", this.getPigeon2().getRate());
     }
 
     // public Command runDriveQuasiTest(SysIdRoutine.Direction direction)
@@ -277,7 +268,7 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
     
             // tx ranges from (-hfov/2) to (hfov/2) in degrees. If your target is on the rightmost edge of 
             // your limelight 3 feed, tx should return roughly 31 degrees.
-            double targetingAngularVelocity = LimelightHelpers.getTX("limelight") * kP;
+            double targetingAngularVelocity = LimelightHelpers.getTY("limelight") * kP;
     
             // convert to radians per second for our drive method
             targetingAngularVelocity *= RobotContainer.MaxAngularRate;
@@ -287,28 +278,30 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
     
             return targetingAngularVelocity;
         }
-    
-        public static double limelight_range_proportional() {    
-            double kP = .001;
-            double targetingForwardSpeed = LimelightHelpers.getTY("limelight") * kP;
-            targetingForwardSpeed *= RobotContainer.MaxSpeed;
-            targetingForwardSpeed *= -1.0;
-            return targetingForwardSpeed;
-        }
 
         public void updateOdometry() {
-            LimelightHelpers.Results results = LimelightHelpers.getLatestResults("limelight").targetingResults;
+            // LimelightHelpers.Results results = LimelightHelpers.getLatestResults("limelight").targetingResults;
             poseEstimator.update(this.getPigeon2().getRotation2d(), m_modulePositions);
             LimelightHelpers.SetRobotOrientation("limelight", poseEstimator.getEstimatedPosition().getRotation().getDegrees(), 0, 0, 0, 0, 0);
             LimelightHelpers.PoseEstimate llPoseEstimate = LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2("limelight");
-               if (llPoseEstimate.tagCount > 0 || Math.abs(this.getPigeon2().getRate()) <= 720) {
-                    poseEstimator.setVisionMeasurementStdDevs(VecBuilder.fill(0.7, 0.7, 99999));
-                    poseEstimator.addVisionMeasurement(llPoseEstimate.pose, Timer.getFPGATimestamp() - ((results.latency_pipeline / 1000) - (results.latency_capture / 1000)));
+               if (llPoseEstimate.tagCount > 0) {
+                if (llPoseEstimate.rawFiducials[0].ambiguity <= 0.5 || llPoseEstimate.rawFiducials[0].distToCamera <= 6) {
+                    poseEstimator.setVisionMeasurementStdDevs(VecBuilder.fill(1, 1, 9999999));
+                    // poseEstimator.addVisionMeasurement(llPoseEstimate.pose, llPoseEstimate.timestampSeconds);
+                    poseEstimator.addVisionMeasurement(llPoseEstimate.pose, llPoseEstimate.timestampSeconds);
                     // System.out.print("hi");
+                    // SmartDashboard.putNumber("distanceLL", llPoseEstimate.rawFiducials[0].distToCamera);
+                    SmartDashboard.putNumber("ambiguity", llPoseEstimate.rawFiducials[0].ambiguity);
+                    SmartDashboard.putNumber("distancetoCam", llPoseEstimate.rawFiducials[0].distToCamera);
+                }
                }
             SmartDashboard.putNumber("Apriltag", llPoseEstimate.tagCount);
             SmartDashboard.putNumber("Rate", this.getPigeon2().getRate());
+            SmartDashboard.putNumber("lengthLL", llPoseEstimate.rawFiducials.length);
+            
             //    System.out.print("hey");
         }
+    
+    
 
 }

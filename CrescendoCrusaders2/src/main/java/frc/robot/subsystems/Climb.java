@@ -98,11 +98,6 @@ public class Climb extends SubsystemBase {
 
     @Override
     public void periodic() {
-        SmartDashboard.putNumber("ClimbL", climbMotorL.getEncoder().getPosition());
-        SmartDashboard.putNumber("ClimbR", climbMotorR.getEncoder().getPosition());
-        // currentPos = climbMotorL.getEncoder().getPosition();
-        // currentPos = (kA * Math.pow(Timer.getFPGATimestamp(), 2)) / 2;
-        // List<E> list
     }
 }
 //config and run motor to raise and pull down lift for climb on chain

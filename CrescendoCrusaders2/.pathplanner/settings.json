@@ -4,9 +4,10 @@
   "holonomicMode": true,
   "pathFolders": [
     "4 Piece Front",
+    "5 Piece",
     "5 Piece Rush",
     "Clear Auto Paths",
-    "5 Piece"
+    "973"
   ],
   "autoFolders": [],
   "defaultMaxVel": 5.39,

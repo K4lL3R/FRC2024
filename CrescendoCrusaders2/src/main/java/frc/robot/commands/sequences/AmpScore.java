@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
 import frc.robot.commands.Climbing;
+import frc.robot.commands.RunArmOuttake;
 import frc.robot.commands.wrists.ArmWristPos;
 
 
@@ -13,7 +14,8 @@ public class AmpScore extends SequentialCommandGroup {
         addCommands( 
             new ParallelCommandGroup(
                 new Climbing(RobotContainer.s_Climb, elePos),
-                new ArmWristPos(RobotContainer.s_ArmWrist, mode)
+                new ArmWristPos(RobotContainer.s_ArmWrist, mode),
+                new RunArmOuttake(RobotContainer.s_Arm, 0)
             )
         );
 

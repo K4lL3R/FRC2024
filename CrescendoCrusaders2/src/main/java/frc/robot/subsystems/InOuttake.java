@@ -28,7 +28,12 @@ public class InOuttake {
         }
 
         public void runFlyWheels(double power) {
-            shooterMotorUp.set(power * 0.95);
+            shooterMotorUp.set(power);
+            shooterMotorDown.set(power);
+        }
+
+        public void runFlyWheelsIdle(double power) {
+            shooterMotorUp.set(power * 0.33);
             shooterMotorDown.set(power);
         }
 

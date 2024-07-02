@@ -1,0 +1,35 @@
+{
+    "name": "Lucio",
+    "sourceUrl": "",
+    "rotations": [
+        {
+            "axis": "x",
+            "degrees": 90
+        },
+        {
+            "axis": "z",
+            "degrees": -90
+        }
+    ],
+    "position": [
+        0,
+        0,
+        0
+    ],
+    "cameras": [
+        {
+            "name": "limelight",
+            "position": [
+                0,
+                0,
+                0
+            ],
+            "rotations": [
+                {
+                    "axis": "x",
+                    "degrees": 40
+                }
+            ]
+        }
+    ]
+}

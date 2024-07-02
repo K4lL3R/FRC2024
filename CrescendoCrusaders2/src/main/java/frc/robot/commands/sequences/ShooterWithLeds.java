@@ -10,6 +10,7 @@ import frc.robot.commands.ChangeAnimation;
 import frc.robot.commands.RunShooter;
 import frc.robot.commands.RunShooterIndex;
 import frc.robot.commands.RunWristIntake;
+import frc.robot.commands.ShooterIdle;
 import frc.robot.subsystems.*;
 import edu.wpi.first.math.*;
 
@@ -46,7 +47,7 @@ public class ShooterWithLeds extends SequentialCommandGroup{
             addCommands(
                 new ParallelCommandGroup(
                     new ChangeAnimation(RobotContainer.s_LEDs, 0),
-                    new RunShooter(RobotContainer.s_ShooterOuttake, 0.25, 0),
+                    new ShooterIdle(RobotContainer.s_ShooterOuttake, 0.25, 0.1),
                     new RunWristIntake(RobotContainer.s_WristIntake, 0)
                 )
             );

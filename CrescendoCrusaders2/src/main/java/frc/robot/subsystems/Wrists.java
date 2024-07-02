@@ -61,9 +61,6 @@ public class Wrists {
 
         @Override
         public void periodic() {
-            SmartDashboard.putNumber("Wrist Encoder Value", WristEncoder.getAbsolutePosition());
-            // SmartDashboard.putNumber("Wrist Non-Absolute", intakeWristEncoder.setDistancePerRotationDistancePerRotation());
-            SmartDashboard.putNumber("Wrist Encoder Value nonAbs", wristMotor.getEncoder().getPosition());
 
         }
     }
@@ -73,28 +70,35 @@ public class Wrists {
         public SparkPIDController shootController;
         public DutyCycleEncoder shootWristEncoder;
         public static double distance;
-        public static double[] points = {-7, -20.1, -24, -25, -28.1};
+        //public static double[] points = {-7, -20.1, -24, -25, -28.1};//4 foot
+        public static double[] points = {-7.33, -7.33, -11.69, -16.8, -19.5, -22.2, -22.8, -24, -24.4, -25
+            , -26, -26.2, -26.4};//1 foot
         //teleop points 0 = -7.3, 4 = -20.9, 8 = -25.4, 12 = -27.4, 16 = -28.1
-        public static double[] pointsAuto = {-7, -20.1, -27, -25, -28.1};
+        public static double[] pointsAuto = {-7.33, -7.33, -11.69, -16.8, -19.5, -22.2, -22.8, -24.4, -24.8, -25.2
+            , -25.2, -25.7, -25.7};
         //auto points 0 = -8, 4 = -20.7, 8 = 24.9, 12 = -26, 16 = -28.6
         // public static double[] distancePOI = {34.85, 77.9, 115, 163.27, 211.3}; shop
         // public static double[] distancePOIB = {45, 93.18, 139, 173.27, 221.3};//field
         //public static double[] distancePOI = {34.85, 77.9, 131, 183, 221.3};//fu
-        public static double[] distancePOI = {50, 113, 168, 240, 260}; //field
+       // public static double[] distancePOI = {50, 113, 168, 240, 260}; //4 foot field
+        // public static double[] distancePOI = {50.71, 66.5, 80.5, 98.3, 112.6, 128.2, 143.9, 158, 167.4, 181, 204.2, 223, 243.4}; //1 foot field
         //public static double[] distancePOI = {43, 91, 141, 183, 221}; //field
         //original 0-34.85, 77.9, 131, 183, 221.3
         //Blue 0-42.6, 4-91.5, 8-142, 12-196
         //Red 0-43.5, 4-91, 8-142.5, 12-193.8,
-
+        //distances: 50.71, 66.5, 80.5, 98.3, 112.6, 128.2, 143.9, 158, 167.4, 181, 204.2, 223, 243.4
+        //setpoints: -7.33, -7.33, -11.19, -14.62, -17.69, -20.12, -21.35, -22.5, -22.65, -24, -24, -24, -24
+        public static double[] distancePOI = {38.01, 50.27, 60.3, 73.4, 83.19, 92.4, 102.1, 109.9, 115.7, 124, 138, 147.8, 162};
         public wristShooter() {
             wristShooter = new CANSparkMax(25, MotorType.kBrushless);
             wristShooter.setSmartCurrentLimit(40);
             wristShooter.enableVoltageCompensation(12);
+            wristShooter.setIdleMode(IdleMode.kBrake);
 
             shootController = wristShooter.getPIDController();
-            shootController.setFF(0.00009);
+            shootController.setFF(0.00004);//0.00009
             shootController.setSmartMotionAllowedClosedLoopError(0.01, 0);
-            shootController.setSmartMotionMaxVelocity(100000, 0);
+            shootController.setSmartMotionMaxVelocity(50000, 0);
             shootController.setSmartMotionMaxAccel(100000, 0);
 
             shootWristEncoder = new DutyCycleEncoder(3);
@@ -136,9 +140,10 @@ public class Wrists {
         //75.56
 
          public static double getDistance() {
-           return 65 / Math.tan((40 + LimelightHelpers.getTY("limelight")) * (Math.PI / 180));
+           return 34 / Math.tan((13 - LimelightHelpers.getTX("limelight")) * (Math.PI / 180));
          }
      
+
          public void setShooterAngle(double distance) {
             shootController.setSmartMotionMaxVelocity(3000, 0);//10000
            double shooterAngleInTicks = degToTicks((Math.atan(78/distance) * (180/Math.PI)));
@@ -174,13 +179,29 @@ public class Wrists {
             //     }
             // }
             if (distance >= distancePOI[0] && distance <= distancePOI[1]) {
-                shootController.setReference(interpolate(points[0], points[1], distancePOI[0], distancePOI[1], distance), ControlType.kSmartMotion);
+                shootController.setReference(interpolate(pointsAuto[0], pointsAuto[1], distancePOI[0], distancePOI[1], distance), ControlType.kSmartMotion);
             } else if (distance > distancePOI[1] && distance <= distancePOI[2]) {
-                shootController.setReference(interpolate(points[1], points[2], distancePOI[1], distancePOI[2], distance), ControlType.kSmartMotion);
+                shootController.setReference(interpolate(pointsAuto[1], pointsAuto[2], distancePOI[1], distancePOI[2], distance), ControlType.kSmartMotion);
             } else if (distance > distancePOI[2] && distance <= distancePOI[3]) {
-                shootController.setReference(interpolate(points[2], points[3], distancePOI[2], distancePOI[3], distance), ControlType.kSmartMotion);
+                shootController.setReference(interpolate(pointsAuto[2], pointsAuto[3], distancePOI[2], distancePOI[3], distance), ControlType.kSmartMotion);
             } else if (distance > distancePOI[3] && distance <= distancePOI[4]) {
-                shootController.setReference(interpolate(points[3], points[4], distancePOI[3], distancePOI[4], distance), ControlType.kSmartMotion);
+                shootController.setReference(interpolate(pointsAuto[3], pointsAuto[4], distancePOI[3], distancePOI[4], distance), ControlType.kSmartMotion);
+            } else if (distance > distancePOI[4] && distance <= distancePOI[5]) {
+                shootController.setReference(interpolate(pointsAuto[4], pointsAuto[5], distancePOI[4], distancePOI[5], distance), ControlType.kSmartMotion);
+            } else if (distance > distancePOI[5] && distance <= distancePOI[6]) {
+                shootController.setReference(interpolate(pointsAuto[5], pointsAuto[6], distancePOI[5], distancePOI[6], distance), ControlType.kSmartMotion);
+            } else if (distance > distancePOI[6] && distance <= distancePOI[7]) {
+                shootController.setReference(interpolate(pointsAuto[6], pointsAuto[7], distancePOI[6], distancePOI[7], distance), ControlType.kSmartMotion);
+            } else if (distance > distancePOI[7] && distance <= distancePOI[8]) {
+                shootController.setReference(interpolate(pointsAuto[7], pointsAuto[8], distancePOI[7], distancePOI[8], distance), ControlType.kSmartMotion);
+            } else if (distance > distancePOI[8] && distance <= distancePOI[9]) {
+                shootController.setReference(interpolate(pointsAuto[8], pointsAuto[9], distancePOI[8], distancePOI[9], distance), ControlType.kSmartMotion);
+            } else if (distance > distancePOI[9] && distance <= distancePOI[10]) {
+                shootController.setReference(interpolate(pointsAuto[9], pointsAuto[10], distancePOI[9], distancePOI[10], distance), ControlType.kSmartMotion);
+            } else if (distance > distancePOI[10] && distance <= distancePOI[11]) {
+                shootController.setReference(interpolate(pointsAuto[10], pointsAuto[11], distancePOI[10], distancePOI[11], distance), ControlType.kSmartMotion);
+            } else if (distance > distancePOI[11] && distance <= distancePOI[12]) {
+                shootController.setReference(interpolate(pointsAuto[11], pointsAuto[12], distancePOI[11], distancePOI[12], distance), ControlType.kSmartMotion);
             }
          }
 
@@ -209,13 +230,29 @@ public class Wrists {
             //     }
             // }
             if (distance >= distancePOI[0] && distance <= distancePOI[1]) {
-                shootController.setReference(interpolate(pointsAuto[0], pointsAuto[1], distancePOI[0], distancePOI[1], distance), ControlType.kSmartMotion);
+                shootController.setReference(interpolate(points[0], points[1], distancePOI[0], distancePOI[1], distance), ControlType.kSmartMotion);
             } else if (distance > distancePOI[1] && distance <= distancePOI[2]) {
-                shootController.setReference(interpolate(pointsAuto[1], pointsAuto[2], distancePOI[1], distancePOI[2], distance), ControlType.kSmartMotion);
+                shootController.setReference(interpolate(points[1], points[2], distancePOI[1], distancePOI[2], distance), ControlType.kSmartMotion);
             } else if (distance > distancePOI[2] && distance <= distancePOI[3]) {
-                shootController.setReference(interpolate(pointsAuto[2], pointsAuto[3], distancePOI[2], distancePOI[3], distance), ControlType.kSmartMotion);
+                shootController.setReference(interpolate(points[2], points[3], distancePOI[2], distancePOI[3], distance), ControlType.kSmartMotion);
             } else if (distance > distancePOI[3] && distance <= distancePOI[4]) {
-                shootController.setReference(interpolate(pointsAuto[3], pointsAuto[4], distancePOI[3], distancePOI[4], distance), ControlType.kSmartMotion);
+                shootController.setReference(interpolate(points[3], points[4], distancePOI[3], distancePOI[4], distance), ControlType.kSmartMotion);
+            } else if (distance > distancePOI[4] && distance <= distancePOI[5]) {
+                shootController.setReference(interpolate(points[4], points[5], distancePOI[4], distancePOI[5], distance), ControlType.kSmartMotion);
+            } else if (distance > distancePOI[5] && distance <= distancePOI[6]) {
+                shootController.setReference(interpolate(points[5], points[6], distancePOI[5], distancePOI[6], distance), ControlType.kSmartMotion);
+            } else if (distance > distancePOI[6] && distance <= distancePOI[7]) {
+                shootController.setReference(interpolate(points[6], points[7], distancePOI[6], distancePOI[7], distance), ControlType.kSmartMotion);
+            } else if (distance > distancePOI[7] && distance <= distancePOI[8]) {
+                shootController.setReference(interpolate(points[7], points[8], distancePOI[7], distancePOI[8], distance), ControlType.kSmartMotion);
+            } else if (distance > distancePOI[8] && distance <= distancePOI[9]) {
+                shootController.setReference(interpolate(points[8], points[9], distancePOI[8], distancePOI[9], distance), ControlType.kSmartMotion);
+            } else if (distance > distancePOI[9] && distance <= distancePOI[10]) {
+                shootController.setReference(interpolate(points[9], points[10], distancePOI[9], distancePOI[10], distance), ControlType.kSmartMotion);
+            } else if (distance > distancePOI[10] && distance <= distancePOI[11]) {
+                shootController.setReference(interpolate(points[10], points[11], distancePOI[10], distancePOI[11], distance), ControlType.kSmartMotion);
+            } else if (distance > distancePOI[11] && distance <= distancePOI[12]) {
+                shootController.setReference(interpolate(points[11], points[12], distancePOI[11], distancePOI[12], distance), ControlType.kSmartMotion);
             }
          }
 
@@ -274,13 +311,6 @@ public class Wrists {
 
         @Override
         public void periodic() {
-            SmartDashboard.putNumber("Wrist Arm Encoder Value", armEncoder.getAbsolutePosition());
-            // SmartDashboard.putNumber("Wrist Non-Absolute", intakeWristEncoder.setDistancePerRotationDistancePerRotation());
-            SmartDashboard.putNumber("Wrist Arm Encoder Value nonAbs", wristMotorArm.getEncoder().getPosition());
-            SmartDashboard.putNumber("Arm", wristMotorArm.getEncoder().getPosition());
-            SmartDashboard.putNumber("Volt", wristMotorArm.getEncoder().getVelocity());
-            SmartDashboard.putBoolean("getName()", armEncoder.isConnected());
-            
             // wristMotorArm.set(pidTest.calculate(wristMotorArm.getEncoder().getPosition(), pidTest.getSetpoint()));
         }
 

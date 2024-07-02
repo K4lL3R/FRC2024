@@ -18,7 +18,7 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "Track"
+                  "name": "SpinShooter"
                 }
               },
               {
@@ -30,7 +30,7 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "Indexer"
+                  "name": "ShootHigh"
                 }
               }
             ]
@@ -41,15 +41,15 @@
           "data": {
             "commands": [
               {
-                "type": "named",
+                "type": "wait",
                 "data": {
-                  "name": "SpinShooter"
+                  "waitTime": 0.1
                 }
               },
               {
-                "type": "wait",
+                "type": "named",
                 "data": {
-                  "waitTime": 0.5
+                  "name": "Indexer"
                 }
               }
             ]
@@ -79,6 +79,12 @@
           "data": {
             "commands": [
               {
+                "type": "named",
+                "data": {
+                  "name": "Track"
+                }
+              },
+              {
                 "type": "path",
                 "data": {
                   "pathName": "4pc 1"
@@ -106,32 +112,7 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "3"
-                }
-              },
-              {
-                "type": "wait",
-                "data": {
-                  "waitTime": 0.2
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "race",
-          "data": {
-            "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "WristUp"
-                }
-              },
-              {
-                "type": "wait",
-                "data": {
-                  "waitTime": 1.2
+                  "name": "Track"
                 }
               },
               {
@@ -169,44 +150,13 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "w"
-                }
-              },
-              {
-                "type": "wait",
-                "data": {
-                  "waitTime": 1.5
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "2"
+                  "name": "Track"
                 }
               },
               {
                 "type": "path",
                 "data": {
-                  "pathName": "4pc 3"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "race",
-          "data": {
-            "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "3"
-                }
-              },
-              {
-                "type": "wait",
-                "data": {
-                  "waitTime": 0.1
+                  "pathName": "4pc 3-4"
                 }
               }
             ]
@@ -223,15 +173,15 @@
                 }
               },
               {
-                "type": "wait",
+                "type": "named",
                 "data": {
-                  "waitTime": 1.6
+                  "name": "3"
                 }
               },
               {
-                "type": "path",
+                "type": "wait",
                 "data": {
-                  "pathName": "4pc 4"
+                  "waitTime": 0.5
                 }
               }
             ]
@@ -257,78 +207,9 @@
           }
         },
         {
-          "type": "race",
+          "type": "path",
           "data": {
-            "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "w"
-                }
-              },
-              {
-                "type": "wait",
-                "data": {
-                  "waitTime": 1.6
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "2"
-                }
-              },
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "4pc 5"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "race",
-          "data": {
-            "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "3"
-                }
-              },
-              {
-                "type": "wait",
-                "data": {
-                  "waitTime": 0.1
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "race",
-          "data": {
-            "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "WristUp"
-                }
-              },
-              {
-                "type": "wait",
-                "data": {
-                  "waitTime": 1.6
-                }
-              },
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "4pc 6"
-                }
-              }
-            ]
+            "pathName": "4pc 5"
           }
         },
         {
@@ -339,37 +220,6 @@
                 "type": "named",
                 "data": {
                   "name": "1"
-                }
-              },
-              {
-                "type": "wait",
-                "data": {
-                  "waitTime": 0.3
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "race",
-          "data": {
-            "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "WristUp"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "StopShooter"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "ShootLock"
                 }
               }
             ]

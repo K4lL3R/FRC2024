@@ -306,18 +306,6 @@
           "data": {
             "commands": [
               {
-                "type": "named",
-                "data": {
-                  "name": "w"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "2"
-                }
-              },
-              {
                 "type": "path",
                 "data": {
                   "pathName": "4pc 5"

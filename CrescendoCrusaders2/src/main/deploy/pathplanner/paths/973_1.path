@@ -20,8 +20,8 @@
         "y": 7.4
       },
       "prevControl": {
-        "x": 5.287028968774753,
-        "y": 7.153494773558406
+        "x": 5.240171991203283,
+        "y": 7.365874624006095
       },
       "nextControl": null,
       "isLocked": false,
@@ -33,7 +33,7 @@
   "eventMarkers": [
     {
       "name": "Intake 2",
-      "waypointRelativePos": 0.8,
+      "waypointRelativePos": 0.6,
       "command": {
         "type": "parallel",
         "data": {
@@ -76,6 +76,86 @@
           ]
         }
       }
+    },
+    {
+      "name": "ShooterRev",
+      "waypointRelativePos": 0.35,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "SpinShooter"
+              }
+            },
+            {
+              "type": "wait",
+              "data": {
+                "waitTime": 0.1
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Indexer",
+      "waypointRelativePos": 0.7,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "Indexer"
+              }
+            },
+            {
+              "type": "wait",
+              "data": {
+                "waitTime": 0.1
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Down",
+      "waypointRelativePos": 0.05,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "ShootFar"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Up",
+      "waypointRelativePos": 0.75,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "ShootLock"
+              }
+            }
+          ]
+        }
+      }
     }
   ],
   "globalConstraints": {
@@ -90,10 +170,10 @@
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "973 paths",
+  "folder": "973",
   "previewStartingState": {
     "rotation": 0,
-    "velocity": 3.0
+    "velocity": 0
   },
   "useDefaultConstraints": true
 }
