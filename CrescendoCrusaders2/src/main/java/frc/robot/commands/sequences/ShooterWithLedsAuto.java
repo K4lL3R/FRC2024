@@ -8,7 +8,6 @@ import frc.robot.RobotContainer;
 import frc.robot.commands.ChangeAnimation;
 import frc.robot.commands.RunShooter;
 import frc.robot.subsystems.*;
-import edu.wpi.first.math.*;
 
 public class ShooterWithLedsAuto extends SequentialCommandGroup{
     public ShooterWithLedsAuto(boolean i, double power) {

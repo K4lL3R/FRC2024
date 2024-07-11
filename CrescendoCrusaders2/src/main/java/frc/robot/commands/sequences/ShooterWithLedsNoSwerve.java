@@ -31,7 +31,7 @@ public class ShooterWithLedsNoSwerve extends SequentialCommandGroup{
                 new ParallelCommandGroup(
                     new SequentialCommandGroup(
                         new ParallelRaceGroup(
-                            new RunShooter(RobotContainer.s_ShooterOuttake, power * 0.6, power * 0.7),
+                            new RunShooter(RobotContainer.s_ShooterOuttake, power * 0.5, power * 0.7),
                             new ChangeAnimation(RobotContainer.s_LEDs, 2),
                             new WaitCommand(0.75)
                         ),

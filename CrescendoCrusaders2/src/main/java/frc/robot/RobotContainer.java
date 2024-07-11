@@ -4,7 +4,6 @@
 
 package frc.robot;
 
-import frc.lib.LimelightHelpers;
 import frc.robot.auton.CrescendoTest1;
 import frc.robot.commands.*;
 import frc.robot.commands.sequences.*;
@@ -14,22 +13,16 @@ import frc.robot.subsystems.InOuttake.*;
 import frc.robot.subsystems.Wrists.*;
 
 import com.ctre.phoenix6.mechanisms.swerve.SwerveModule.DriveRequestType;
-import com.ctre.phoenix6.mechanisms.swerve.SwerveRequest.FieldCentricFacingAngle;
-import com.ctre.phoenix6.mechanisms.swerve.utility.PhoenixPIDController;
 import com.ctre.phoenix6.configs.CurrentLimitsConfigs;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveRequest;
 
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.math.MathUtil;
-import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.DriverStation.Alliance;
 
 import com.pathplanner.lib.auto.*;
 /**
@@ -51,18 +44,18 @@ public class RobotContainer {
     Amp
   }
 
-  private ScoringMode currentMode;
-  private String mode;
+  // private ScoringMode currentMode;
+  // private String mode;
 
-  private void setMode(ScoringMode mode) {
-    currentMode = mode;
-    this.mode = currentMode.toString();
-    System.out.println(this.mode);
-  } 
+  // private void setMode(ScoringMode mode) {
+  //   currentMode = mode;
+  //   this.mode = currentMode.toString();
+  //   System.out.println(this.mode);
+  // } 
 
-  private ScoringMode getCurrentMode() {
-    return currentMode;
-  }
+  // private ScoringMode getCurrentMode() {
+  //   return currentMode;
+  // }
 
 
 
@@ -160,15 +153,6 @@ public class RobotContainer {
   public static final RunShooter spinShooter = new RunShooter(s_ShooterOuttake, 1.0, -0.7);
   public static final RunShooter stopShooter = new RunShooter(s_ShooterOuttake, 0.0, 0.0);
 
-  //tracking
-  public final Command trackingSwerve = drivetrain.applyRequest(() -> driveRobotCentric.withVelocityX(-MathUtil.applyDeadband(controller.getY(), 0.15) * MaxSpeed) // Drive forward with
-                                                                                           // negative Y (forward)
-            .withVelocityY(-MathUtil.applyDeadband(controller.getX(), 0.15) * MaxSpeed) // Drive left with negative X (left)
-            .withRotationalRate(CommandSwerveDrivetrain.limelight_aim_proportional()));
-
-  public static final LEDset LEDsGreen = new LEDset(s_LEDs, Constants.LEDs.Colors.Green);
-  public static final LEDset LEDsOrange = new LEDset(s_LEDs, Constants.LEDs.Colors.Orange);
-
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the trigger bindings
@@ -241,11 +225,10 @@ public class RobotContainer {
     Trigger armBeamBreak = new Trigger(() -> s_Arm.getIsBeamBrakeBroken());
     Trigger wristBeamBreak = new Trigger(() -> s_WristIntake.getIsBeamBrakeBroken());
     // Trigger aprilTagDetected = new Trigger(() -> LimelightHelpers.getFiducialID("limelight") == 4 || LimelightHelpers.getFiducialID("limelight") == 7);
-    Trigger limelightTX = new Trigger(() -> Math.abs(LimelightHelpers.getTY("limelight")) < 6);
     wristBeamBreak.whileTrue(new ChangeAnimation(s_LEDs, 1)).onFalse(new ChangeAnimation(s_LEDs, 0));
     armBeamBreak.whileTrue(new ChangeAnimation(s_LEDs, 4)).onFalse(new ChangeAnimation(s_LEDs, 0));
     buttons.button(1).onTrue(shootWristDown);
-    buttons.button(12).onTrue(new wristPower(s_WristShooter));
+    buttons.button(11).onTrue(new wristPower(s_WristShooter));
     buttons.button(3).onTrue(shootWristShooting.alongWith(new ShooterWithLedsNoSwerve(true, 1)));
     buttons.button(4).onTrue(shootWristClimbLock);
     buttons.button(5).onTrue(elevatorDown);
@@ -253,7 +236,7 @@ public class RobotContainer {
     buttons.button(7).onTrue(sequence3Score);
     controller.button(7).onTrue(spinShot).onFalse(stopShot);
     // buttons.button(11).and(limelightTX).onTrue(spinShot.alongWith(outtakeDisc)).onFalse(stopShooter.alongWith(stopWristIntake));
-    buttons.button(9).and(armBeamBreak.negate()).onTrue(new ChangeAnimation(s_LEDs, 5).alongWith(new AmpFeedSequenceButtonPanel(0.5))).onFalse(new ArmOut());
+    buttons.button(9).and(armBeamBreak.negate()).onTrue(new ChangeAnimation(s_LEDs, 5).alongWith(new TrapPassThrough(0.5))).onFalse(new TrapInit());
     // buttons.button(10).onTrue(sequence3AfterAmp);
     buttons.button(8).and(armBeamBreak.negate()).onTrue(new ChangeAnimation(s_LEDs, 5).alongWith(new AmpFeedSequenceButtonPanel(0.5))).onFalse(new AmpSequence(Constants.Climb.Position.Amp, Constants.Wrists.Arm.ArmMode.Score));
     buttons.button(2).onTrue(shootFromFar);
@@ -289,30 +272,30 @@ public class RobotContainer {
     // controller.pov(0).onTrue(drivetrain.applyRequest(() -> new SwerveRequest.FieldCentricFacingAngle().withTargetDirection(Rotation2d.fromDegrees(90))));
   }
 
-  private void configNewBindings() {
-    buttons.button(1).onTrue(Commands.runOnce(() -> setMode(ScoringMode.Amp)));
-    buttons.button(2).onTrue(Commands.runOnce(() -> setMode(ScoringMode.Shoot)));
-    controller.button(5).onTrue(intakeArm).onFalse(stopArm);
-    controller.button(6).onTrue(outtakeArm).onFalse(stopArm);
-    if (currentMode == ScoringMode.Amp) {
-      controller.button(7).onTrue(sequence3Score);
-      controller.button(8).onTrue(sequence3AfterAmp);
-    } else if (currentMode == ScoringMode.Shoot) {
-      controller.button(7).onTrue(spinShot).onFalse(stopShot);
-      controller.button(8).whileTrue(sequence2).onFalse(stopSequence2);
-      controller.button(1).onTrue(tareSwerve);
-      // controller.button(2).and(llTXMinus).whileTrue(drivetrain.applyRequest(() -> driveRobotCentric.withRotationalRate(0.1 * MaxAngularRate))).onFalse(drivetrain.getDefaultCommand());
-      // controller.button(3).and(llTXPlus).whileTrue(drivetrain.applyRequest(() -> driveRobotCentric.withRotationalRate(-0.1 * MaxAngularRate))).onFalse(drivetrain.getDefaultCommand());
-      // controller.button(3).and(armBeamBreak.negate()).whileTrue(feeding);
-      controller.button(3).whileTrue(        
+  // private void configNewBindings() {
+  //   buttons.button(1).onTrue(Commands.runOnce(() -> setMode(ScoringMode.Amp)));
+  //   buttons.button(2).onTrue(Commands.runOnce(() -> setMode(ScoringMode.Shoot)));
+  //   controller.button(5).onTrue(intakeArm).onFalse(stopArm);
+  //   controller.button(6).onTrue(outtakeArm).onFalse(stopArm);
+  //   if (currentMode == ScoringMode.Amp) {
+  //     controller.button(7).onTrue(sequence3Score);
+  //     controller.button(8).onTrue(sequence3AfterAmp);
+  //   } else if (currentMode == ScoringMode.Shoot) {
+  //     controller.button(7).onTrue(spinShot).onFalse(stopShot);
+  //     controller.button(8).whileTrue(sequence2).onFalse(stopSequence2);
+  //     controller.button(1).onTrue(tareSwerve);
+  //     // controller.button(2).and(llTXMinus).whileTrue(drivetrain.applyRequest(() -> driveRobotCentric.withRotationalRate(0.1 * MaxAngularRate))).onFalse(drivetrain.getDefaultCommand());
+  //     // controller.button(3).and(llTXPlus).whileTrue(drivetrain.applyRequest(() -> driveRobotCentric.withRotationalRate(-0.1 * MaxAngularRate))).onFalse(drivetrain.getDefaultCommand());
+  //     // controller.button(3).and(armBeamBreak.negate()).whileTrue(feeding);
+  //     controller.button(3).whileTrue(        
 
-          drivetrain.applyRequest(() -> driveRobotCentric.withVelocityX(-MathUtil.applyDeadband(controller.getY(), 0.1) * RobotContainer.MaxSpeed) // Drive forward with
-                                                                                         // negative Y (forward)
-          .withVelocityY(-MathUtil.applyDeadband(controller.getX(), 0.1) * RobotContainer.MaxSpeed) // Drive left with negative X (left)
-          .withRotationalRate(-MathUtil.applyDeadband(controller.getZ(), 0.1) * RobotContainer.MaxAngularRate)))
-      .onFalse(drivetrain.getDefaultCommand());
-    }
-  }
+  //         drivetrain.applyRequest(() -> driveRobotCentric.withVelocityX(-MathUtil.applyDeadband(controller.getY(), 0.1) * RobotContainer.MaxSpeed) // Drive forward with
+  //                                                                                        // negative Y (forward)
+  //         .withVelocityY(-MathUtil.applyDeadband(controller.getX(), 0.1) * RobotContainer.MaxSpeed) // Drive left with negative X (left)
+  //         .withRotationalRate(-MathUtil.applyDeadband(controller.getZ(), 0.1) * RobotContainer.MaxAngularRate)))
+  //     .onFalse(drivetrain.getDefaultCommand());
+  //   }
+  // }
 
 
 

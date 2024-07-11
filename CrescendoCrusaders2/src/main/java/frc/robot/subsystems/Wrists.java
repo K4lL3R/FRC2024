@@ -71,7 +71,7 @@ public class Wrists {
         public DutyCycleEncoder shootWristEncoder;
         public static double distance;
         //public static double[] points = {-7, -20.1, -24, -25, -28.1};//4 foot
-        public static double[] points = {-7.33, -7.33, -11.69, -16.8, -19.5, -22.2, -22.8, -24, -24.4, -25
+        public static double[] points = {-7.33, -7.33, -11.69, -16.8, -19.5, -22.2, -22.8, -22.8, -24.4, -25
             , -26, -26.2, -26.4};//1 foot
         //teleop points 0 = -7.3, 4 = -20.9, 8 = -25.4, 12 = -27.4, 16 = -28.1
         public static double[] pointsAuto = {-7.33, -7.33, -11.69, -16.8, -19.5, -22.2, -22.8, -24.4, -24.8, -25.2
@@ -88,7 +88,8 @@ public class Wrists {
         //Red 0-43.5, 4-91, 8-142.5, 12-193.8,
         //distances: 50.71, 66.5, 80.5, 98.3, 112.6, 128.2, 143.9, 158, 167.4, 181, 204.2, 223, 243.4
         //setpoints: -7.33, -7.33, -11.19, -14.62, -17.69, -20.12, -21.35, -22.5, -22.65, -24, -24, -24, -24
-        public static double[] distancePOI = {38.01, 50.27, 60.3, 73.4, 83.19, 92.4, 102.1, 109.9, 115.7, 124, 138, 147.8, 162};
+        public static double[] distancePOIShop = {38.01, 50.27, 60.3, 73.4, 83.19, 92.4, 102.1, 109.9, 115.7, 124, 138, 147.8, 162};
+        public static double[] distancePOI = {42.33, 52.53, 64.18, 75.69, 87.73, 98.31, 108.97, 119.85, 130.11, 139.17, 149.03, 160.28, 170};
         public wristShooter() {
             wristShooter = new CANSparkMax(25, MotorType.kBrushless);
             wristShooter.setSmartCurrentLimit(40);
