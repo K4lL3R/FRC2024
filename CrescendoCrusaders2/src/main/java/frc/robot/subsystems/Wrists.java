@@ -71,25 +71,15 @@ public class Wrists {
         public DutyCycleEncoder shootWristEncoder;
         public static double distance;
         //public static double[] points = {-7, -20.1, -24, -25, -28.1};//4 foot
-        public static double[] points = {-7.33, -7.33, -11.69, -16.8, -19.5, -22.2, -22.8, -22.8, -24.4, -25
-            , -26, -26.2, -26.4};//1 foot
+        public static double[] pointsAuto = {-7.33, -7.33, -11.69, -16.8, -19.5, -20.5, -21.2, -22.2, -23, -23.8 //TELEOP
+            , -24, -24.3, -25};//1 foot 
         //teleop points 0 = -7.3, 4 = -20.9, 8 = -25.4, 12 = -27.4, 16 = -28.1
-        public static double[] pointsAuto = {-7.33, -7.33, -11.69, -16.8, -19.5, -22.2, -22.8, -24.4, -24.8, -25.2
-            , -25.2, -25.7, -25.7};
-        //auto points 0 = -8, 4 = -20.7, 8 = 24.9, 12 = -26, 16 = -28.6
-        // public static double[] distancePOI = {34.85, 77.9, 115, 163.27, 211.3}; shop
-        // public static double[] distancePOIB = {45, 93.18, 139, 173.27, 221.3};//field
-        //public static double[] distancePOI = {34.85, 77.9, 131, 183, 221.3};//fu
-       // public static double[] distancePOI = {50, 113, 168, 240, 260}; //4 foot field
-        // public static double[] distancePOI = {50.71, 66.5, 80.5, 98.3, 112.6, 128.2, 143.9, 158, 167.4, 181, 204.2, 223, 243.4}; //1 foot field
-        //public static double[] distancePOI = {43, 91, 141, 183, 221}; //field
-        //original 0-34.85, 77.9, 131, 183, 221.3
-        //Blue 0-42.6, 4-91.5, 8-142, 12-196
-        //Red 0-43.5, 4-91, 8-142.5, 12-193.8,
+        public static double[] points = {-7.33, -7.33, -11.69, -16.8, -19.5, -21, -22.7, -24, -24, -24
+            , -24, -24, -24};
         //distances: 50.71, 66.5, 80.5, 98.3, 112.6, 128.2, 143.9, 158, 167.4, 181, 204.2, 223, 243.4
         //setpoints: -7.33, -7.33, -11.19, -14.62, -17.69, -20.12, -21.35, -22.5, -22.65, -24, -24, -24, -24
         public static double[] distancePOIShop = {38.01, 50.27, 60.3, 73.4, 83.19, 92.4, 102.1, 109.9, 115.7, 124, 138, 147.8, 162};
-        public static double[] distancePOI = {42.33, 52.53, 64.18, 75.69, 87.73, 98.31, 108.97, 119.85, 130.11, 139.17, 149.03, 160.28, 170};
+        public static double[] distancePOI = {42.44, 53.06, 64.18, 74.15, 85.33, 94.6, 104.5, 114.4, 127.2, 137, 146, 154.58, 164};
         public wristShooter() {
             wristShooter = new CANSparkMax(25, MotorType.kBrushless);
             wristShooter.setSmartCurrentLimit(40);
@@ -156,29 +146,6 @@ public class Wrists {
          }
          
          public void interpolatedAngle(double distance) {
-            // if (DriverStation.getAlliance().isPresent()) {
-            //     if (DriverStation.getAlliance().get() == Alliance.Red) {
-            //         if (distance >= distancePOI[0] && distance <= distancePOI[1]) {
-            //             shootController.setReference(interpolate(points[0], points[1], distancePOI[0], distancePOI[1], distance), ControlType.kSmartMotion);
-            //         } else if (distance > distancePOI[1] && distance <= distancePOI[2]) {
-            //             shootController.setReference(interpolate(points[1], points[2], distancePOI[1], distancePOI[2], distance), ControlType.kSmartMotion);
-            //         } else if (distance > distancePOI[2] && distance <= distancePOI[3]) {
-            //             shootController.setReference(interpolate(points[2], points[3], distancePOI[2], distancePOI[3], distance), ControlType.kSmartMotion);
-            //         } else if (distance > distancePOI[3] && distance <= distancePOI[4]) {
-            //             shootController.setReference(interpolate(points[3], points[4], distancePOI[3], distancePOI[4], distance), ControlType.kSmartMotion);
-            //         }
-            //     } else {
-            //         if (distance >= distancePOIBlue[0] && distance <= distancePOIBlue[1]) {
-            //             shootController.setReference(interpolate(points[0], points[1], distancePOIBlue[0], distancePOIBlue[1], distance), ControlType.kSmartMotion);
-            //         } else if (distance > distancePOIBlue[1] && distance <= distancePOIBlue[2]) {
-            //             shootController.setReference(interpolate(points[1], points[2], distancePOIBlue[1], distancePOIBlue[2], distance), ControlType.kSmartMotion);
-            //         } else if (distance > distancePOIBlue[2] && distance <= distancePOIBlue[3]) {
-            //             shootController.setReference(interpolate(points[2], points[3], distancePOIBlue[2], distancePOIBlue[3], distance), ControlType.kSmartMotion);
-            //         } else if (distance > distancePOIBlue[3] && distance <= distancePOIBlue[4]) {
-            //             shootController.setReference(interpolate(points[3], points[4], distancePOIBlue[3], distancePOIBlue[4], distance), ControlType.kSmartMotion);
-            //         }    
-            //     }
-            // }
             if (distance >= distancePOI[0] && distance <= distancePOI[1]) {
                 shootController.setReference(interpolate(pointsAuto[0], pointsAuto[1], distancePOI[0], distancePOI[1], distance), ControlType.kSmartMotion);
             } else if (distance > distancePOI[1] && distance <= distancePOI[2]) {
@@ -296,19 +263,21 @@ public class Wrists {
                     break;
                 case Feed: armController.setReference(Constants.Wrists.Arm.feedSetPoint, ControlType.kSmartMotion);
                     break;
+                case Demo: armController.setReference(Constants.Wrists.Arm.Demo, ControlType.kSmartMotion);
+                    break;
             }
         }
 
-        public void setSetpoint(Constants.Wrists.Arm.ArmMode arm) {
-            switch (arm) {
-                case Stow: pidTest.setSetpoint(Constants.Wrists.Arm.stowSetPoint);
-                    break;
-                case Score: pidTest.setSetpoint(Constants.Wrists.Arm.scoreSetPoint);
-                    break;
-                case Feed: pidTest.setSetpoint(Constants.Wrists.Arm.feedSetPoint);
-                    break;
-            }
-        }
+        // public void setSetpoint(Constants.Wrists.Arm.ArmMode arm) {
+        //     switch (arm) {
+        //         case Stow: pidTest.setSetpoint(Constants.Wrists.Arm.stowSetPoint);
+        //             break;
+        //         case Score: pidTest.setSetpoint(Constants.Wrists.Arm.scoreSetPoint);
+        //             break;
+        //         case Feed: pidTest.setSetpoint(Constants.Wrists.Arm.feedSetPoint);
+        //             break;
+        //     }
+        // }
 
         @Override
         public void periodic() {

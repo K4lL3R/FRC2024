@@ -40,6 +40,13 @@ public class InOuttake {
         public void runHoldingMotor(double power) {
             shooterMotorHold.set(power);
         }
+
+        @Override
+        public void periodic() {
+            SmartDashboard.putNumber("UpFlywheel", (shooterMotorUp.getMotorTemperature() * 1.8) + 32);
+            SmartDashboard.putNumber("DownFlywheel", (shooterMotorDown.getMotorTemperature() * 1.8) + 32);
+            SmartDashboard.putNumber("Indexer", (shooterMotorHold.getMotorTemperature() * 1.8) + 32);
+        }
     }
 
     public static class ArmOuttake extends SubsystemBase {
@@ -69,6 +76,7 @@ public class InOuttake {
         public void periodic() {
             beamBroken = getIsBeamBrakeBroken();
             SmartDashboard.putBoolean("BeamBreak", armBeamBreak.get());
+            SmartDashboard.putNumber("elec", armOuttakeMotor.getOutputCurrent());
         }
     }
 
@@ -102,6 +110,7 @@ public class InOuttake {
         public void periodic() {
             beamBroken = getIsBeamBrakeBroken();
             SmartDashboard.putBoolean("BeamBreakWrist", wristBeamBreak.get());
+            
         }
     }
 }

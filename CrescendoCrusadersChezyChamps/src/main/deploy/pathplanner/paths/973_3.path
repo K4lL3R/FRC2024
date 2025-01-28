@@ -1,0 +1,64 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 5.3,
+        "y": 6.48
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 6.099216579925133,
+        "y": 6.267878673623258
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 8.03597165267985,
+        "y": 5.830546883001227
+      },
+      "prevControl": {
+        "x": 7.247212530307969,
+        "y": 6.017974793267811
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": null
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [
+    {
+      "name": "Shoot on move 2",
+      "minWaypointRelativePos": 0.7,
+      "maxWaypointRelativePos": 1,
+      "constraints": {
+        "maxVelocity": 2.0,
+        "maxAcceleration": 2.0,
+        "maxAngularVelocity": 540.0,
+        "maxAngularAcceleration": 720.0
+      }
+    }
+  ],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 5.76,
+    "maxAcceleration": 5.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0
+  },
+  "goalEndState": {
+    "velocity": 2.0,
+    "rotation": -9.950626687951583,
+    "rotateFast": true
+  },
+  "reversed": false,
+  "folder": "973",
+  "previewStartingState": {
+    "rotation": 9.75,
+    "velocity": 2.0
+  },
+  "useDefaultConstraints": true
+}

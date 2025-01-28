@@ -6,7 +6,6 @@ import com.revrobotics.CANSparkBase.ControlType;
 import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
-import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -15,37 +14,33 @@ public class Climb extends SubsystemBase {
     public CANSparkMax climbMotorR;
     public SparkPIDController climbControllerL;
     public SparkPIDController climbControllerR;
-    public DutyCycleEncoder elevatorEncL;
-    public DutyCycleEncoder elevatorEncR;
-    // private double setpoint;
-    // private double currentPos;
-    // private double powerFF;
-    // private double kA = 1;
 
     public Climb() {
         climbMotorL = new CANSparkMax(31, MotorType.kBrushless);
-        climbMotorL.enableVoltageCompensation(12);
-        climbMotorL.setIdleMode(IdleMode.kBrake);
         climbMotorL.setInverted(false);
+        climbMotorL.setIdleMode(IdleMode.kBrake);
+        climbMotorL.enableVoltageCompensation(12);
         climbMotorL.setSmartCurrentLimit(40);
-
         climbMotorR = new CANSparkMax(32, MotorType.kBrushless);
-        climbMotorR.enableVoltageCompensation(12);
-        climbMotorR.setIdleMode(IdleMode.kBrake);
         climbMotorR.setInverted(false);
+        climbMotorR.setIdleMode(IdleMode.kBrake);
+        climbMotorR.enableVoltageCompensation(12);
         climbMotorR.setSmartCurrentLimit(40);
 
         climbControllerL = climbMotorL.getPIDController();
-        climbControllerL.setFF(0.0001);
-        climbControllerL.setSmartMotionMaxVelocity(Constants.Climb.maxVel, 0);
-        climbControllerL.setSmartMotionMaxAccel(Constants.Climb.maxAccel, 0);
-        climbControllerL.setSmartMotionAllowedClosedLoopError(0.8, 0);
+        climbControllerL.setFF(.0001);
+        climbControllerL.setSmartMotionAllowedClosedLoopError(.8, 0);
 
         climbControllerR = climbMotorR.getPIDController();
-        climbControllerR.setFF(0.0001);
+        climbControllerR.setFF(.0001);
+        climbControllerR.setSmartMotionAllowedClosedLoopError(.8, 0);
+        
+        climbControllerL.setSmartMotionMaxVelocity(Constants.Climb.maxVel, 0);
         climbControllerR.setSmartMotionMaxVelocity(Constants.Climb.maxVel, 0);
+        climbControllerL.setSmartMotionMaxAccel(Constants.Climb.maxAccel, 0);
         climbControllerR.setSmartMotionMaxAccel(Constants.Climb.maxAccel, 0);
-        climbControllerR.setSmartMotionAllowedClosedLoopError(0.8, 0);
+
+        
     }
 
     public void moveClimb(Constants.Climb.Position pos) {
@@ -71,29 +66,9 @@ public class Climb extends SubsystemBase {
                         climbControllerR.setReference(-Constants.Climb.GlobalSetpoints.ampElevator, ControlType.kSmartMotion);
             break;
         }
-
     }
 
-    // public void setSetpoint(Constants.Climb.Position pos) {
-    //     switch(pos) {
-    //         case Up:    
-    //         setpoint = Constants.Climb.GlobalSetpoints.elevatorUpPos;
-    //         break;
-    //         case Down:  
-    //         setpoint = Constants.Climb.GlobalSetpoints.elevatorDefaultPos;
-    //         break;
-    //         case Mid: 
-    //         setpoint = Constants.Climb.GlobalSetpoints.midPos;
-    //         break;  
-    //         case Amp:   
-    //         setpoint = Constants.Climb.GlobalSetpoints.ampElevator;
-    //         break;
-    //     }
-    // }
 
-    // public double getAppliedPower() {
-
-    // }
 
     @Override
     public void periodic() {

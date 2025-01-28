@@ -11,7 +11,7 @@ import frc.robot.Constants;
 
 public class LEDs extends SubsystemBase {
     // public static AddressableLED mLEDs;
-    private final int LedCount = 32;
+    private final int LedCount = 32; 
     private final CANdle mLEDs;
 
     public LEDs() {

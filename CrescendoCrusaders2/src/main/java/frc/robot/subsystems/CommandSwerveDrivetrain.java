@@ -2,6 +2,7 @@ package frc.robot.subsystems;
 
 import java.util.function.Supplier;
 
+import com.ctre.phoenix6.Orchestra;
 import com.ctre.phoenix6.Utils;
 import com.ctre.phoenix6.hardware.Pigeon2;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveDrivetrain;
@@ -49,8 +50,8 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
     StructPublisher<Pose2d> publisher;
     StructPublisher<Pose2d> publisher2;
     StructArrayPublisher<SwerveModuleState> publisher3;
-    private final SwerveDrivePoseEstimator poseEstimator = new SwerveDrivePoseEstimator(
-            m_kinematics, this.getPigeon2().getRotation2d(), m_modulePositions, new Pose2d());
+    private final SwerveDrivePoseEstimator poseEstimator;
+    public Orchestra orchestra = new Orchestra();
     // LimelightHelpers.PoseEstimate llPoseEstimate;
 
 
@@ -77,10 +78,21 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
             .getStructTopic("MyPoseAAA", Pose2d.struct).publish();
         publisher3 = NetworkTableInstance.getDefault()
             .getStructArrayTopic("Swerve", SwerveModuleState.struct).publish();
-        this.seedFieldRelative(new Pose2d(1.58, 5.49, Rotation2d.fromDegrees(0)));
-        LimelightHelpers.setCameraPose_RobotSpace("limelight", 0.3, 0, 0.1, 0, 40, 0);
+        LimelightHelpers.setCameraPose_RobotSpace("limelight", -0.23, 0.27, 0.52, 90, 11, 180);
+
+        poseEstimator = new SwerveDrivePoseEstimator(
+            m_kinematics, this.getPigeon2().getRotation2d(), m_modulePositions, new Pose2d());
 
         // llPoseEstimate = LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2("limelight");
+        orchestra.addInstrument(this.getModule(0).getDriveMotor());
+        orchestra.addInstrument(this.getModule(0).getSteerMotor());
+        orchestra.addInstrument(this.getModule(1).getDriveMotor());
+        orchestra.addInstrument(this.getModule(1).getSteerMotor());
+        orchestra.addInstrument(this.getModule(2).getDriveMotor());
+        orchestra.addInstrument(this.getModule(2).getSteerMotor());
+        orchestra.addInstrument(this.getModule(3).getDriveMotor());
+        orchestra.addInstrument(this.getModule(3).getSteerMotor());
+        orchestra.loadMusic("fein.chrp");
     }
 
     public double getDriveBaseRadius() {
@@ -261,7 +273,7 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
         // if it is too high, the robot will oscillate.
         // if it is too low, the robot will never reach its target
         // if the robot never turns in the correct direction, kP should be inverted.
-            double kP = .01;
+            double kP = .009;
     
             // tx ranges from (-hfov/2) to (hfov/2) in degrees. If your target is on the rightmost edge of 
             // your limelight 3 feed, tx should return roughly 31 degrees.
@@ -283,9 +295,9 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
             LimelightHelpers.PoseEstimate llPoseEstimate = LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2("limelight");
                if (llPoseEstimate.tagCount > 0) {
                 if (llPoseEstimate.rawFiducials[0].ambiguity <= 0.5 || llPoseEstimate.rawFiducials[0].distToCamera <= 6) {
-                    poseEstimator.setVisionMeasurementStdDevs(VecBuilder.fill(1, 1, 9999999));
+                    this.setVisionMeasurementStdDevs(VecBuilder.fill(1, 1, 9999999));
                     // poseEstimator.addVisionMeasurement(llPoseEstimate.pose, llPoseEstimate.timestampSeconds);
-                    poseEstimator.addVisionMeasurement(llPoseEstimate.pose, llPoseEstimate.timestampSeconds);
+                    this.addVisionMeasurement(llPoseEstimate.pose, llPoseEstimate.timestampSeconds);
                     // System.out.print("hi");
                     // SmartDashboard.putNumber("distanceLL", llPoseEstimate.rawFiducials[0].distToCamera);
                     SmartDashboard.putNumber("ambiguity", llPoseEstimate.rawFiducials[0].ambiguity);

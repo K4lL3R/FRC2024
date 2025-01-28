@@ -34,4 +34,12 @@ public class ChangeAnimation extends Command {
     public boolean isFinished() {
         return false;
     }
+
+    @Override
+    public boolean runsWhenDisabled() {
+        if (i == 0) {
+          return true;
+        }
+        return false;
+    }
 }

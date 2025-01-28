@@ -51,7 +51,7 @@ public class ShooterWithLedsNoSwerve extends SequentialCommandGroup{
             addCommands(
                 new ParallelCommandGroup(
                     new ChangeAnimation(RobotContainer.s_LEDs, 0),
-                    new ShooterIdle(RobotContainer.s_ShooterOuttake, 0.25, 0.1)
+                    new ShooterIdle(RobotContainer.s_ShooterOuttake, 0.35, 0.35)
                 )
             );
         }

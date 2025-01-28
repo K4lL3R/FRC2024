@@ -19,7 +19,7 @@ public class ArmWristPos extends Command {
     public void initialize() {
       wrist.wristToPositionArm(pos);
 
-      wrist.setSetpoint(pos);
+      // wrist.setSetpoint(pos);
       // wrist.wristMotorArm.set(0.2);
     }
 

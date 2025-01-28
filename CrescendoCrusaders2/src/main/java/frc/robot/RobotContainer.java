@@ -13,12 +13,14 @@ import frc.robot.subsystems.InOuttake.*;
 import frc.robot.subsystems.Wrists.*;
 
 import com.ctre.phoenix6.mechanisms.swerve.SwerveModule.DriveRequestType;
+import com.ctre.phoenix6.signals.NeutralModeValue;
 import com.ctre.phoenix6.configs.CurrentLimitsConfigs;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveRequest;
 
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -39,23 +41,7 @@ public class RobotContainer {
   public static final CommandJoystick controller = new CommandJoystick(0);
   public static final CommandJoystick buttons = new CommandJoystick(1);
 
-  public enum ScoringMode {
-    Shoot,
-    Amp
-  }
 
-  // private ScoringMode currentMode;
-  // private String mode;
-
-  // private void setMode(ScoringMode mode) {
-  //   currentMode = mode;
-  //   this.mode = currentMode.toString();
-  //   System.out.println(this.mode);
-  // } 
-
-  // private ScoringMode getCurrentMode() {
-  //   return currentMode;
-  // }
 
 
 
@@ -89,13 +75,7 @@ public class RobotContainer {
   public static final Wrist s_Wrist = new Wrist();
   public static final LEDs s_LEDs = new LEDs();
 
-
-
-  // public static final Telemetry telemetry = new Telemetry(RobotContainer.MaxSpeed);
-
-  // public static final AutoBuilder autoBuilder = new AutoBuilder();
   public static SendableChooser <Command> m_chooser;
-  // public static final CrescendoTest1 autoTest = new CrescendoTest1("Path4");
 
   //sequences
   public static final ClimbSequence sequence = new ClimbSequence(Constants.Climb.Position.Up, Constants.Wrists.ShooterConst.ShooterMode.Down);
@@ -146,7 +126,7 @@ public class RobotContainer {
 
   //spin arm intake/outtake
   public static final RunArmOuttake intakeArm = new RunArmOuttake(s_Arm, 1);
-  public static final RunArmOuttake outtakeArm = new RunArmOuttake(s_Arm, -0.1);
+  public static final RunArmOuttake outtakeArm = new RunArmOuttake(s_Arm, 0.1);
   public static final RunArmOuttake stopArm = new RunArmOuttake(s_Arm, 0);
 
   //run shooter
@@ -172,21 +152,17 @@ public class RobotContainer {
 
     drivetrain.configPathPlanner();
     m_chooser = new SendableChooser<>();
-    // m_chooser.setDefaultOption("autoTest", new CrescendoTest1("Ne"));
 
     m_chooser.setDefaultOption("5 Note First", new CrescendoTest1("5 Note First"));
-    //m_chooser.addOption("ClearAuto", new CrescendoTest1("ClearAuto"));
     m_chooser.addOption("4Note", new CrescendoTest1("4 Note Auto"));
-    //m_chooser.addOption("5 Rush Second", new CrescendoTest1("5 Note Second"));
-    //m_chooser.addOption("5 Rush Third", new CrescendoTest1("5 Note Third"));
     m_chooser.addOption("973", new CrescendoTest1("973"));
     m_chooser.addOption("973_mew", new CrescendoTest1("973_mew"));
     m_chooser.addOption("ClearTrack", new CrescendoTest1("ClearTrack"));
     m_chooser.addOption("6 Note", new CrescendoTest1("6 Note"));
+    m_chooser.addOption("New Auto", new CrescendoTest1("New Auto"));
     //m_chooser.addOption("5D 1-2R", new CrescendoTest1("5D 1-2R"));
     //m_chooser.addOption("Copy of 5D 1-2R", new CrescendoTest1("Copy of 5D 1-2R"));
 
-    // drivetrain.tare_Swerve();
     drivetrain.setDefaultCommand( // Drivetrain will execute this command periodically
         drivetrain.applyRequest(() -> drive.withVelocityX(-MathUtil.applyDeadband(controller.getY(), 0.1) * RobotContainer.MaxSpeed) // Drive forward with
         // negative Y (forward)
@@ -195,7 +171,6 @@ public class RobotContainer {
         ));
     configureBindings();
     SmartDashboard.putData("Auto", m_chooser);
-    // SmartDashboard.putString("Mode", mode);
     drivetrain.getModule(0).getDriveMotor().getConfigurator().apply(currentConfigs);
     drivetrain.getModule(0).getSteerMotor().getConfigurator().apply(currentConfigs);
     drivetrain.getModule(1).getDriveMotor().getConfigurator().apply(currentConfigs);
@@ -203,13 +178,12 @@ public class RobotContainer {
     drivetrain.getModule(2).getDriveMotor().getConfigurator().apply(currentConfigs);
     drivetrain.getModule(2).getSteerMotor().getConfigurator().apply(currentConfigs); 
     drivetrain.getModule(3).getDriveMotor().getConfigurator().apply(currentConfigs);
-    drivetrain.getModule(3).getSteerMotor().getConfigurator().apply(currentConfigs);    
+    drivetrain.getModule(3).getSteerMotor().getConfigurator().apply(currentConfigs);
+    drivetrain.configNeutralMode(NeutralModeValue.Brake);  
 
     drivetrain.getPigeon2().reset();
+    s_LEDs.setDefaultCommand(new ChangeAnimation(s_LEDs, 0));
 
-    // while (CommandSwerveDrivetrain.limelight_aim_proportional() > MaxAngularRate) {
-    //   System.out.println("hi");
-    // }
   }
 
   /**
@@ -225,8 +199,7 @@ public class RobotContainer {
     Trigger armBeamBreak = new Trigger(() -> s_Arm.getIsBeamBrakeBroken());
     Trigger wristBeamBreak = new Trigger(() -> s_WristIntake.getIsBeamBrakeBroken());
     // Trigger aprilTagDetected = new Trigger(() -> LimelightHelpers.getFiducialID("limelight") == 4 || LimelightHelpers.getFiducialID("limelight") == 7);
-    wristBeamBreak.whileTrue(new ChangeAnimation(s_LEDs, 1)).onFalse(new ChangeAnimation(s_LEDs, 0));
-    armBeamBreak.whileTrue(new ChangeAnimation(s_LEDs, 4)).onFalse(new ChangeAnimation(s_LEDs, 0));
+    // wristBeamBreak.onTrue(new ChangeAnimation(s_LEDs, 1));
     buttons.button(1).onTrue(shootWristDown);
     buttons.button(11).onTrue(new wristPower(s_WristShooter));
     buttons.button(3).onTrue(shootWristShooting.alongWith(new ShooterWithLedsNoSwerve(true, 1)));
@@ -237,11 +210,12 @@ public class RobotContainer {
     controller.button(7).onTrue(spinShot).onFalse(stopShot);
     // buttons.button(11).and(limelightTX).onTrue(spinShot.alongWith(outtakeDisc)).onFalse(stopShooter.alongWith(stopWristIntake));
     buttons.button(9).and(armBeamBreak.negate()).onTrue(new ChangeAnimation(s_LEDs, 5).alongWith(new TrapPassThrough(0.5))).onFalse(new TrapInit());
-    // buttons.button(10).onTrue(sequence3AfterAmp);
-    buttons.button(8).and(armBeamBreak.negate()).onTrue(new ChangeAnimation(s_LEDs, 5).alongWith(new AmpFeedSequenceButtonPanel(0.5))).onFalse(new AmpSequence(Constants.Climb.Position.Amp, Constants.Wrists.Arm.ArmMode.Score));
+    buttons.button(10).onTrue(Commands.runOnce(() -> drivetrain.orchestra.play(), drivetrain)).onFalse(drivetrain.getDefaultCommand());
+    // buttons.button(8).and(armTrigger.negate()).onTrue(new ChangeAnimation(s_LEDs, 5).alongWith(new AmpFeedSequenceButtonPanel(0.5))).onFalse(new AmpSequence(Constants.Climb.Position.Amp, Constants.Wrists.Arm.ArmMode.Score));
+    buttons.button(8).onTrue(new AmpSeq(0.5));
     buttons.button(2).onTrue(shootFromFar);
+    buttons.button(12).onTrue(new ArmWristPos(s_ArmWrist, Constants.Wrists.Arm.ArmMode.Demo));
 
-    // controller.button(7).onTrue(outtakeDisc.alongWith(new RunShooterIndex(s_ShooterOuttake, 0.7))).onFalse(stopWristIntake.alongWith(new RunShooterIndex(s_ShooterOuttake, 0.1)));
     controller.button(8).whileTrue(sequence2.alongWith(new ShooterWithLedsNoSwerve(false, 0))).onFalse(stopSequence2);
     controller.button(5).onTrue(intakeArm).onFalse(sequence3AfterAmp);
     controller.pov(0).onTrue(outtakeArm).onFalse(stopArm);
@@ -249,53 +223,14 @@ public class RobotContainer {
     controller.button(2).and(wristBeamBreak.negate()).onTrue(new ChangeAnimation(s_LEDs, 5).alongWith(new AmpFeedSequenceButtonPanel(-0.3))).onFalse(new AmpFeedSequenceButtonPanel(0));
     controller.pov(180).onTrue(intakeArm).onFalse(stopArm);
     controller.button(6).onTrue(outtakeDisc).onFalse(stopWristIntake);
-    // controller.pov(90).onTrue(drivetrain.applyRequest(() -> DriverStation.getAlliance().get() == Alliance.Blue ? 
-    //   FIELD_CENTRIC_FACING_ANGLE
-    //     .withVelocityX(-MathUtil.applyDeadband(controller.getY(), 0.1) * RobotContainer.MaxSpeed)
-    //     .withVelocityY(-MathUtil.applyDeadband(controller.getX(), 0.1) * RobotContainer.MaxSpeed) : 
-    //   FIELD_CENTRIC_FACING_ANGLE_RED
-    //     .withVelocityX(-MathUtil.applyDeadband(controller.getY(), 0.1) * RobotContainer.MaxSpeed)
-    //     .withVelocityY(-MathUtil.applyDeadband(controller.getX(), 0.1) * RobotContainer.MaxSpeed)));
-    // controller.pov(270).onTrue(drivetrain.getDefaultCommand());
-
-    // controller.button(2).and(llTXMinus).whileTrue(drivetrain.applyRequest(() -> driveRobotCentric.withRotationalRate(0.1 * MaxAngularRate))).onFalse(drivetrain.getDefaultCommand());
-    // controller.button(3).and(llTXPlus).whileTrue(drivetrain.applyRequest(() -> driveRobotCentric.withRotationalRate(-0.1 * MaxAngularRate))).onFalse(drivetrain.getDefaultCommand());
-    // controller.button(3).and(armBeamBreak.negate()).whileTrue(feeding);
     controller.button(3).whileTrue(        
 
-        drivetrain.applyRequest(() -> driveRobotCentric.withVelocityX(-MathUtil.applyDeadband(controller.getY(), 0.1) * RobotContainer.MaxSpeed) // Drive forward with
-                                                                                       // negative Y (forward)
-        .withVelocityY(-MathUtil.applyDeadband(controller.getX(), 0.1) * RobotContainer.MaxSpeed) // Drive left with negative X (left)
+        drivetrain.applyRequest(() -> driveRobotCentric.withVelocityX(-MathUtil.applyDeadband(controller.getY(), 0.1) * RobotContainer.MaxSpeed)
+        .withVelocityY(-MathUtil.applyDeadband(controller.getX(), 0.1) * RobotContainer.MaxSpeed) 
         .withRotationalRate(-MathUtil.applyDeadband(controller.getZ(), 0.1) * RobotContainer.MaxAngularRate)))
     .onFalse(drivetrain.getDefaultCommand());
 
-    // controller.pov(0).onTrue(drivetrain.applyRequest(() -> new SwerveRequest.FieldCentricFacingAngle().withTargetDirection(Rotation2d.fromDegrees(90))));
   }
-
-  // private void configNewBindings() {
-  //   buttons.button(1).onTrue(Commands.runOnce(() -> setMode(ScoringMode.Amp)));
-  //   buttons.button(2).onTrue(Commands.runOnce(() -> setMode(ScoringMode.Shoot)));
-  //   controller.button(5).onTrue(intakeArm).onFalse(stopArm);
-  //   controller.button(6).onTrue(outtakeArm).onFalse(stopArm);
-  //   if (currentMode == ScoringMode.Amp) {
-  //     controller.button(7).onTrue(sequence3Score);
-  //     controller.button(8).onTrue(sequence3AfterAmp);
-  //   } else if (currentMode == ScoringMode.Shoot) {
-  //     controller.button(7).onTrue(spinShot).onFalse(stopShot);
-  //     controller.button(8).whileTrue(sequence2).onFalse(stopSequence2);
-  //     controller.button(1).onTrue(tareSwerve);
-  //     // controller.button(2).and(llTXMinus).whileTrue(drivetrain.applyRequest(() -> driveRobotCentric.withRotationalRate(0.1 * MaxAngularRate))).onFalse(drivetrain.getDefaultCommand());
-  //     // controller.button(3).and(llTXPlus).whileTrue(drivetrain.applyRequest(() -> driveRobotCentric.withRotationalRate(-0.1 * MaxAngularRate))).onFalse(drivetrain.getDefaultCommand());
-  //     // controller.button(3).and(armBeamBreak.negate()).whileTrue(feeding);
-  //     controller.button(3).whileTrue(        
-
-  //         drivetrain.applyRequest(() -> driveRobotCentric.withVelocityX(-MathUtil.applyDeadband(controller.getY(), 0.1) * RobotContainer.MaxSpeed) // Drive forward with
-  //                                                                                        // negative Y (forward)
-  //         .withVelocityY(-MathUtil.applyDeadband(controller.getX(), 0.1) * RobotContainer.MaxSpeed) // Drive left with negative X (left)
-  //         .withRotationalRate(-MathUtil.applyDeadband(controller.getZ(), 0.1) * RobotContainer.MaxAngularRate)))
-  //     .onFalse(drivetrain.getDefaultCommand());
-  //   }
-  // }
 
 
 
@@ -305,8 +240,6 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    // An example command will be run in autonomous
-    // return Autos.exampleAuto(m_exampleSubsystem);
     return m_chooser.getSelected();
   }
 }

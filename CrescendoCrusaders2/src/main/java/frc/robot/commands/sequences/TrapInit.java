@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
+import frc.robot.commands.ChangeAnimation;
 import frc.robot.commands.RunArmOuttake;
 import frc.robot.commands.RunWristIntake;
 import frc.robot.commands.wrists.ArmWristPos;
@@ -19,7 +20,8 @@ public class TrapInit extends SequentialCommandGroup {
                     new IntakeWristPos(RobotContainer.s_Wrist, Constants.Wrists.Intake.IntakeMode.Feed),
                     new RunWristIntake(RobotContainer.s_WristIntake, 0),
                     new RunArmOuttake(RobotContainer.s_Arm, 0),
-                    new ShooterWristPos(RobotContainer.s_WristShooter, Constants.Wrists.ShooterConst.ShooterMode.Down)
+                    new ShooterWristPos(RobotContainer.s_WristShooter, Constants.Wrists.ShooterConst.ShooterMode.Down),
+                    new ChangeAnimation(RobotContainer.s_LEDs, 4)
                 )
         );
 

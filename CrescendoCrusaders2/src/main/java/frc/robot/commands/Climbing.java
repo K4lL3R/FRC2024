@@ -28,10 +28,6 @@ public class Climbing extends Command {
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
-      if(interrupted) {
-        s_Climb.climbMotorL.set(0);
-        s_Climb.climbMotorR.set(0);
-      }
     }
 
     // Returns true when the command should end.
